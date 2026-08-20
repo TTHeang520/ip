@@ -1,26 +1,54 @@
+/**
+ * Represents a task in the task list.
+ */
 public class Task {
     protected String description;
     protected boolean isDone;
 
+    /**
+     * Creates a task with the given description.
+     *
+     * @param description Description of the task.
+     */
     public Task(String description) {
         this.description = description;
         this.isDone = false;
     }
 
-    public void markAsDone(){
+    /**
+     * Marks the task as completed.
+     */
+    public void markAsDone() {
         this.isDone = true;
     }
 
-    public void markAsNotDone(){
+    /**
+     * Marks the task as not completed.
+     */
+    public void markAsNotDone() {
         this.isDone = false;
     }
 
+    /**
+     * Returns the status icon used in the list display.
+     *
+     * @return X if the task is done, or a blank space otherwise.
+     */
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
+    /**
+     * Returns the icon that identifies the task type.
+     *
+     * @return The task type icon.
+     */
+    public String getTypeIcon() {
+        return "";
+    }
+
     @Override
-    public String toString (){
-        return "[" + getStatusIcon() + "] " + description;
+    public String toString() {
+        return "[" + getTypeIcon() + "][" + getStatusIcon() + "] " + description;
     }
 }
