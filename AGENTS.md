@@ -28,6 +28,12 @@ Unless the user says otherwise, assume that you are assisting a student working 
 
 Ensure that Java 25 is used when running the application or build tasks. On this macOS setup, IntelliJ is currently using OpenJDK 25.0.1. If the terminal uses a different Java version, switch to the installed Java 25 version before compiling or running the project.
 
+## UI testing
+
+After each code update, check whether the UI test cases in `test/ui-test-plan.md` need to be updated to reflect the changed behavior. If needed, update the test plan before running tests.
+
+After each code update, invoke the project-specific `test-ui` skill so the command-line UI tests are run from `test/ui-test-plan.md` and the console input/output record is reported.
+
 ## Git
 
 Use lightweight tags unless the user requests an annotated tag.
