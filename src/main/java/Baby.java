@@ -30,6 +30,14 @@ public class Baby {
 
                 System.out.println("Nice! I've marked this task as done:");
                 System.out.println("[X] " + tasks[index]);
+            } else if (input.startsWith("unmark ")) {
+                int taskNumber = Integer.parseInt(input.substring(7));
+                int index = taskNumber - 1;
+
+                isDone[index] = false;
+
+                System.out.println("OK, I've marked this task as not done yet:");
+                System.out.println("[] " + tasks[index]);
             } else {
                 tasks[taskCount] = input;
                 taskCount++;
