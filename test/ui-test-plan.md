@@ -105,6 +105,74 @@ OK, I've marked this task as not done yet:
 Bye. I'll miss you.
 ```
 
+## Test Case 4: Handle Incorrect Inputs
+
+Aim: Verify that incorrect inputs show helpful error messages, do not crash the program, and do not add invalid tasks to the list.
+
+Command:
+
+```bash
+javac -d out/test-ui src/main/java/*.java && java -cp out/test-ui Baby
+```
+
+Inputs:
+
+```text
+
+todo
+todo read book
+deadline /by Sunday
+deadline return book
+deadline return book /by Sunday
+event meeting /from Mon
+event /from Mon /to Tue
+event meeting /from /to Tue
+event meeting /from Mon /to
+event meeting /from Mon /to Tue
+mark
+mark two
+mark 99
+mark 2
+blah
+list
+bye
+```
+
+Expected output:
+
+```text
+Hello! I'm Baby.
+What can I do for you, your highness.
+OOPS! Please enter a command.
+OOPS! A todo needs a description. Try: todo read book
+Got it. I've added this task:
+  [T][ ] read book
+Now you have 1 tasks in the list.
+OOPS! A deadline needs a description before /by.
+OOPS! A deadline needs a description and /by. Try: deadline return book /by Sunday
+Got it. I've added this task:
+  [D][ ] return book (by: Sunday)
+Now you have 2 tasks in the list.
+OOPS! An event needs an end time after /to.
+OOPS! An event needs a description before /from.
+OOPS! An event needs a start time after /from.
+OOPS! An event needs an end time after /to.
+Got it. I've added this task:
+  [E][ ] meeting (from: Mon to: Tue)
+Now you have 3 tasks in the list.
+OOPS! Please give me a task number to mark. Try: mark 1
+OOPS! Task numbers must be whole numbers. Try: mark 1
+OOPS! Task number 99 is not in your list.
+Nice! I've marked this task as done:
+ [D][X] return book (by: Sunday)
+OOPS! I don't recognise that command. Try todo, deadline, event, list, mark, unmark, or bye.
+Here are the tasks in your list:
+1.[T][ ] read book
+2.[D][X] return book (by: Sunday)
+3.[E][ ] meeting (from: Mon to: Tue)
+Bye. I'll miss you.
+```
+
 ## Machine-Readable Test Cases
 
 ```json ui-tests
@@ -143,6 +211,32 @@ Bye. I'll miss you.
       "bye"
     ],
     "expected_output": "Hello! I'm Baby.\nWhat can I do for you, your highness.\nGot it. I've added this task:\n  [T][ ] read book\nNow you have 1 tasks in the list.\nGot it. I've added this task:\n  [D][ ] do homework (by: no idea :-p)\nNow you have 2 tasks in the list.\nNice! I've marked this task as done:\n [D][X] do homework (by: no idea :-p)\nOK, I've marked this task as not done yet:\n [D][ ] do homework (by: no idea :-p)\nBye. I'll miss you.\n"
+  },
+  {
+    "name": "Handle Incorrect Inputs",
+    "aim": "Verify that incorrect inputs show helpful error messages, do not crash the program, and do not add invalid tasks to the list.",
+    "command": "javac -d out/test-ui src/main/java/*.java && java -cp out/test-ui Baby",
+    "input": [
+      "",
+      "todo",
+      "todo read book",
+      "deadline /by Sunday",
+      "deadline return book",
+      "deadline return book /by Sunday",
+      "event meeting /from Mon",
+      "event /from Mon /to Tue",
+      "event meeting /from /to Tue",
+      "event meeting /from Mon /to",
+      "event meeting /from Mon /to Tue",
+      "mark",
+      "mark two",
+      "mark 99",
+      "mark 2",
+      "blah",
+      "list",
+      "bye"
+    ],
+    "expected_output": "Hello! I'm Baby.\nWhat can I do for you, your highness.\nOOPS! Please enter a command.\nOOPS! A todo needs a description. Try: todo read book\nGot it. I've added this task:\n  [T][ ] read book\nNow you have 1 tasks in the list.\nOOPS! A deadline needs a description before /by.\nOOPS! A deadline needs a description and /by. Try: deadline return book /by Sunday\nGot it. I've added this task:\n  [D][ ] return book (by: Sunday)\nNow you have 2 tasks in the list.\nOOPS! An event needs an end time after /to.\nOOPS! An event needs a description before /from.\nOOPS! An event needs a start time after /from.\nOOPS! An event needs an end time after /to.\nGot it. I've added this task:\n  [E][ ] meeting (from: Mon to: Tue)\nNow you have 3 tasks in the list.\nOOPS! Please give me a task number to mark. Try: mark 1\nOOPS! Task numbers must be whole numbers. Try: mark 1\nOOPS! Task number 99 is not in your list.\nNice! I've marked this task as done:\n [D][X] return book (by: Sunday)\nOOPS! I don't recognise that command. Try todo, deadline, event, list, mark, unmark, or bye.\nHere are the tasks in your list:\n1.[T][ ] read book\n2.[D][X] return book (by: Sunday)\n3.[E][ ] meeting (from: Mon to: Tue)\nBye. I'll miss you.\n"
   }
 ]
 ```
