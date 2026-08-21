@@ -6,12 +6,6 @@ import java.util.Scanner;
  */
 public class Baby {
     private static final String LINE = "____________________________________________________________";
-    private static final String TODO_COMMAND = "todo";
-    private static final String DEADLINE_COMMAND = "deadline";
-    private static final String EVENT_COMMAND = "event";
-    private static final String MARK_COMMAND = "mark";
-    private static final String UNMARK_COMMAND = "unmark";
-    private static final String DELETE_COMMAND = "delete";
 
     /**
      * Starts the command loop for the task manager.
@@ -36,14 +30,14 @@ public class Baby {
                 break;
             } else if (input.equals("list")) {
                 printTaskList(tasks);
-            } else if (isCommand(input, MARK_COMMAND)) {
+            } else if (isCommand(input, Command.MARK)) {
                 markTask(input, tasks, true);
-            } else if (isCommand(input, UNMARK_COMMAND)) {
+            } else if (isCommand(input, Command.UNMARK)) {
                 markTask(input, tasks, false);
-            } else if (isCommand(input, DELETE_COMMAND)) {
+            } else if (isCommand(input, Command.DELETE)) {
                 deleteTask(input, tasks);
-            } else if (isCommand(input, TODO_COMMAND)) {
-                String description = getCommandArgument(input, TODO_COMMAND);
+            } else if (isCommand(input, Command.TODO)) {
+                String description = getCommandArgument(input, Command.TODO.getCommandWord());
                 if (description.isEmpty()) {
                     printError("OOPS! A todo needs a description. Try: todo read book");
                     continue;
@@ -52,7 +46,7 @@ public class Baby {
                 Task task = new Todo(description);
                 tasks.add(task);
                 printTaskAdded(task, tasks.size());
-            } else if (isCommand(input, DEADLINE_COMMAND)) {
+            } else if (isCommand(input, Command.DEADLINE)) {
                 Deadline deadline = createDeadline(input);
                 if (deadline == null) {
                     continue;
@@ -60,7 +54,7 @@ public class Baby {
 
                 tasks.add(deadline);
                 printTaskAdded(deadline, tasks.size());
-            } else if (isCommand(input, EVENT_COMMAND)) {
+            } else if (isCommand(input, Command.EVENT)) {
                 Event event = createEvent(input);
                 if (event == null) {
                     continue;
@@ -78,7 +72,7 @@ public class Baby {
     }
 
     private static Deadline createDeadline(String input) {
-        String details = getCommandArgument(input, DEADLINE_COMMAND);
+        String details = getCommandArgument(input, Command.DEADLINE.getCommandWord());
         int byMarkerIndex = findMarkerIndex(details, "/by");
 
         if (byMarkerIndex == -1) {
@@ -100,7 +94,7 @@ public class Baby {
     }
 
     private static Event createEvent(String input) {
-        String details = getCommandArgument(input, EVENT_COMMAND);
+        String details = getCommandArgument(input, Command.EVENT.getCommandWord());
         int fromMarkerIndex = findMarkerIndex(details, "/from");
 
         if (fromMarkerIndex == -1) {
@@ -161,8 +155,8 @@ public class Baby {
      * @param isMarkingDone Whether to mark the task as done or not done.
      */
     private static void markTask(String input, ArrayList<Task> tasks, boolean isMarkingDone) {
-        String command = isMarkingDone ? MARK_COMMAND : UNMARK_COMMAND;
-        int index = getTaskIndex(input, command, tasks.size());
+        Command command = isMarkingDone ? Command.MARK : Command.UNMARK;
+        int index = getTaskIndex(input, command.getCommandWord(), tasks.size());
         if (index == -1) {
             return;
         }
@@ -184,7 +178,7 @@ public class Baby {
      * @param tasks The current task list.
      */
     private static void deleteTask(String input, ArrayList<Task> tasks) {
-        int index = getTaskIndex(input, DELETE_COMMAND, tasks.size());
+        int index = getTaskIndex(input, Command.DELETE.getCommandWord(), tasks.size());
         if (index == -1) {
             return;
         }
@@ -250,8 +244,9 @@ public class Baby {
      * @param command The command word to check.
      * @return True if the input uses the given command word.
      */
-    private static boolean isCommand(String input, String command) {
-        return input.equals(command) || input.startsWith(command + " ");
+    private static boolean isCommand(String input, Command command) {
+        String commandWord = command.getCommandWord();
+        return input.equals(commandWord) || input.startsWith(commandWord + " ");
     }
 
     private static void printTaskAdded(Task task, int taskCount) {
