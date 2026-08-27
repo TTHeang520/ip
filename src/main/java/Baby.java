@@ -1,178 +1,78 @@
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 /**
  * Runs the Baby command-line task manager.
  */
 public class Baby {
-    private static final String LINE = "____________________________________________________________";
-    private static final String FILE_PATH = "./data/baby.txt";
     /**
      * Starts the command loop for the task manager.
      *
      * @param args Command-line arguments that are not used.
      */
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        ArrayList<Task> tasks = loadTasks();
+        Ui ui = new Ui();
+        TaskList tasks = new TaskList(Storage.loadTasks());
 
-        printResponse("Hello! I'm Baby.", "What can I do for you, your highness.");
+        ui.showWelcome();
 
         while (true) {
-            if (!scanner.hasNextLine()) {
+            if (!ui.hasNextLine()) {
                 break;
             }
 
-            String input = scanner.nextLine().trim();
+            String input = ui.readCommand();
 
             if (input.equals("bye")) {
-                printResponse("Bye. I'll miss you.");
+                ui.showGoodbye();
                 break;
             } else if (input.equals("list")) {
-                printTaskList(tasks);
+                ui.printTaskList(tasks.getTasks());
             } else if (input.equals(Command.MARK.getCommandWord())
                     || input.startsWith(Command.MARK.getCommandWord() + " ")) {
-                markTask(input, tasks);
+                markTask(input, tasks, ui);
             } else if (input.equals(Command.UNMARK.getCommandWord())
                     || input.startsWith(Command.UNMARK.getCommandWord() + " ")) {
-                unmarkTask(input, tasks);
+                unmarkTask(input, tasks, ui);
             } else if (input.equals(Command.DELETE.getCommandWord())
                     || input.startsWith(Command.DELETE.getCommandWord() + " ")) {
-                deleteTask(input, tasks);
+                deleteTask(input, tasks, ui);
             } else if (input.equals(Command.TODO.getCommandWord())
                     || input.startsWith(Command.TODO.getCommandWord() + " ")) {
-                String description = input.substring(Command.TODO.getCommandWord().length()).trim();
+                String description = Parser.getTodoDescription(input);
                 if (description.isEmpty()) {
-                    printError("OOPS! A todo needs a description. Try: todo read book");
+                    ui.printError("OOPS! A todo needs a description. Try: todo read book");
                     continue;
                 }
 
                 Task task = new Todo(description);
                 tasks.add(task);
-                saveTasks(tasks);
-                printTaskAdded(task, tasks.size());
+                Storage.saveTasks(tasks.getTasks());
+                ui.printTaskAdded(task, tasks.size());
             } else if (input.equals(Command.DEADLINE.getCommandWord())
                     || input.startsWith(Command.DEADLINE.getCommandWord() + " ")) {
-                Deadline deadline = createDeadline(input);
+                Deadline deadline = Parser.createDeadline(input, ui);
                 if (deadline == null) {
                     continue;
                 }
 
                 tasks.add(deadline);
-                saveTasks(tasks);
-                printTaskAdded(deadline, tasks.size());
+                Storage.saveTasks(tasks.getTasks());
+                ui.printTaskAdded(deadline, tasks.size());
             } else if (input.equals(Command.EVENT.getCommandWord())
                     || input.startsWith(Command.EVENT.getCommandWord() + " ")) {
-                Event event = createEvent(input);
+                Event event = Parser.createEvent(input, ui);
                 if (event == null) {
                     continue;
                 }
 
                 tasks.add(event);
-                saveTasks(tasks);
-                printTaskAdded(event, tasks.size());
+                Storage.saveTasks(tasks.getTasks());
+                ui.printTaskAdded(event, tasks.size());
             } else if (input.isEmpty()) {
-                printError("OOPS! Please enter a command.");
+                ui.printError("OOPS! Please enter a command.");
             } else {
-                printError("OOPS! I don't recognise that command. Try todo, deadline, event, list, mark, unmark, delete, or bye.");
+                ui.printError("OOPS! I don't recognise that command. Try todo, deadline, event, list, mark, unmark, delete, or bye.");
             }
         }
-        scanner.close();
-    }
-
-    private static Deadline createDeadline(String input) {
-        String details = input.substring(Command.DEADLINE.getCommandWord().length()).trim();
-        String[] parts;
-        if (details.startsWith("/by ")) {
-            parts = new String[] { "", details.substring("/by ".length()) };
-        } else {
-            parts = details.split(" /by ", 2);
-        }
-
-        if (parts.length < 2) {
-            printError("OOPS! A deadline needs a description and /by. Try: deadline return book /by Sunday");
-            return null;
-        }
-
-        String description = parts[0].trim();
-        String byText = parts[1].trim();
-        if (description.isEmpty()) {
-            printError("OOPS! A deadline needs a description before /by.");
-            return null;
-        } else if (byText.isEmpty()) {
-            printError("OOPS! A deadline needs a date or time after /by.");
-            return null;
-        }
-
-        DateTimeFormatter formatter =
-                DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-
-        try {
-            LocalDateTime by = LocalDateTime.parse(byText, formatter);
-            return new Deadline(description, by);
-        } catch (DateTimeParseException e) {
-            printError("OOPS! Please use the format yyyy-MM-dd HHmm.");
-            return null;
-        }
-    }
-
-    private static Event createEvent(String input) {
-        String details = input.substring(Command.EVENT.getCommandWord().length()).trim();
-        String[] descriptionAndTimes;
-        if (details.startsWith("/from ")) {
-            descriptionAndTimes = new String[] { "", details.substring("/from ".length()) };
-        } else {
-            descriptionAndTimes = details.split(" /from ", 2);
-        }
-
-        if (descriptionAndTimes.length < 2) {
-            printError("OOPS! An event needs a description, /from, and /to. Try: event meeting /from Mon 2pm /to 4pm");
-            return null;
-        }
-
-        String description = descriptionAndTimes[0].trim();
-        String times = descriptionAndTimes[1].trim();
-        String[] fromAndTo;
-        if (times.startsWith("/to ")) {
-            fromAndTo = new String[] { "", times.substring("/to ".length()) };
-        } else {
-            fromAndTo = times.split(" /to ", 2);
-        }
-
-        if (fromAndTo.length < 2) {
-            printError("OOPS! An event needs an end time after /to.");
-            return null;
-        }
-
-        String fromText = fromAndTo[0].trim();
-        String toText = fromAndTo[1].trim();
-        if (description.isEmpty()) {
-            printError("OOPS! An event needs a description before /from.");
-            return null;
-        } else if (fromText.isEmpty()) {
-            printError("OOPS! An event needs a start time after /from.");
-            return null;
-        } else if (toText.isEmpty()) {
-            printError("OOPS! An event needs an end time after /to.");
-            return null;
-        }
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-
-        try {
-            LocalDateTime from = LocalDateTime.parse(fromText, formatter);
-            LocalDateTime to = LocalDateTime.parse(toText, formatter);
-
-            return new Event(description, from, to);
-        }catch (DateTimeParseException e) {
-            printError("OOPS!Please use the format yyyy-MM-dd HHmm. My princess.");
-            return null;
-        }
+        ui.close();
     }
 
     /**
@@ -181,16 +81,16 @@ public class Baby {
      * @param input The full user command.
      * @param tasks The current task list.
      */
-    private static void markTask(String input, ArrayList<Task> tasks) {
-        int index = getTaskIndex(input, Command.MARK.getCommandWord(), tasks.size());
+    private static void markTask(String input, TaskList tasks, Ui ui) {
+        int index = Parser.getTaskIndex(input, Command.MARK.getCommandWord(), tasks.size(), ui);
         if (index == -1) {
             return;
         }
 
         Task task = tasks.get(index);
         task.markAsDone();
-        saveTasks(tasks);
-        printResponse("Nice! I've marked this task as done:", " " + task);
+        Storage.saveTasks(tasks.getTasks());
+        ui.printResponse("Nice! I've marked this task as done:", " " + task);
     }
 
     /**
@@ -199,16 +99,16 @@ public class Baby {
      * @param input The full user command.
      * @param tasks The current task list.
      */
-    private static void unmarkTask(String input, ArrayList<Task> tasks) {
-        int index = getTaskIndex(input, Command.UNMARK.getCommandWord(), tasks.size());
+    private static void unmarkTask(String input, TaskList tasks, Ui ui) {
+        int index = Parser.getTaskIndex(input, Command.UNMARK.getCommandWord(), tasks.size(), ui);
         if (index == -1) {
             return;
         }
 
         Task task = tasks.get(index);
         task.markAsNotDone();
-        saveTasks(tasks);
-        printResponse("OK, I've marked this task as not done yet:", " " + task);
+        Storage.saveTasks(tasks.getTasks());
+        ui.printResponse("OK, I've marked this task as not done yet:", " " + task);
     }
 
     /**
@@ -217,159 +117,18 @@ public class Baby {
      * @param input The full user command.
      * @param tasks The current task list.
      */
-    private static void deleteTask(String input, ArrayList<Task> tasks) {
-        int index = getTaskIndex(input, Command.DELETE.getCommandWord(), tasks.size());
+    private static void deleteTask(String input, TaskList tasks, Ui ui) {
+        int index = Parser.getTaskIndex(input, Command.DELETE.getCommandWord(), tasks.size(), ui);
         if (index == -1) {
             return;
         }
 
         Task removedTask = tasks.remove(index);
-        saveTasks(tasks);
-        printResponse(
+        Storage.saveTasks(tasks.getTasks());
+        ui.printResponse(
                 "Noted. I've removed this task:",
                 " " + removedTask,
                 "Now you have " + tasks.size() + " tasks in the list.");
     }
-
-    /**
-     * Converts a 1-based task number from user input into a 0-based list index.
-     *
-     * @param input The full user command.
-     * @param command The command word at the start of the input.
-     * @param taskCount The number of tasks currently stored.
-     * @return The valid 0-based task index, or -1 if the input is invalid.
-     */
-    private static int getTaskIndex(String input, String command, int taskCount) {
-        String taskNumberText = input.substring(command.length()).trim();
-
-        if (taskNumberText.isEmpty()) {
-            printError("OOPS! Please give me a task number to " + command + ". Try: " + command + " 1");
-            return -1;
-        }
-
-        int taskNumber;
-        try {
-            taskNumber = Integer.parseInt(taskNumberText);
-        } catch (NumberFormatException e) {
-            printError("OOPS! Task numbers must be whole numbers. Try: " + command + " 1");
-            return -1;
-        }
-
-        if (taskNumber < 1 || taskNumber > taskCount) {
-            printError("OOPS! Task number " + taskNumber + " is not in your list.");
-            return -1;
-        }
-
-        return taskNumber - 1;
-    }
-
-    private static void printTaskAdded(Task task, int taskCount) {
-        printResponse("Got it. I've added this task:", " " + task, "Now you have " + taskCount + " tasks in the list.");
-    }
-
-    /**
-     * Prints all stored tasks with their current 1-based task numbers.
-     *
-     * @param tasks The current task list.
-     */
-    private static void printTaskList(ArrayList<Task> tasks) {
-        String[] lines = new String[tasks.size() + 1];
-        lines[0] = "Here are the tasks in your list:";
-        for (int i = 0; i < tasks.size(); i++) {
-            lines[i + 1] = (i + 1) + "." + tasks.get(i);
-        }
-
-        printResponse(lines);
-    }
-
-    private static void printError(String message) {
-        printResponse(message);
-    }
-
-    /**
-     * Prints one chatbot response wrapped in horizontal lines.
-     *
-     * @param lines Lines to show inside the response box.
-     */
-    private static void printResponse(String... lines) {
-        System.out.println(LINE);
-        for (String line : lines) {
-            System.out.println(" " + line);
-        }
-        System.out.println(LINE);
-    }
-
-    private static void saveTasks (ArrayList<Task> tasks) {
-        try {
-            File dataFolder = new File("./data"); //create new file object
-            dataFolder.mkdirs();
-
-            FileWriter writer = new FileWriter(FILE_PATH);
-
-            for (Task task : tasks) {
-                writer.write(task.toFileString() + System.lineSeparator());
-            }
-
-            writer.close();
-        } catch (IOException e) {
-            printError("Sorry My Princess, I couldn't save your tasks.");
-        }
-    }
-
-    private static ArrayList<Task> loadTasks() {
-        ArrayList<Task> tasks = new ArrayList<>();
-        File file = new File(FILE_PATH);
-
-        if (!file.exists()) {
-            return tasks;
-        }
-
-        try {
-            Scanner fileScanner = new Scanner(file);
-
-            while (fileScanner.hasNextLine()) {
-                String line = fileScanner.nextLine();
-                String[] parts = line.split(" \\| ");
-
-                String type = parts[0];
-                boolean isDone = parts[1].equals("1");
-
-                Task task;
-
-                if (type.equals("T")) {
-                    task = new Todo(parts[2]);
-                } else if (type.equals("D")) {
-                    DateTimeFormatter formatter =
-                            DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-
-                    LocalDateTime by =
-                            LocalDateTime.parse(parts[3], formatter);
-
-                    task = new Deadline(parts[2], by);
-                } else {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-
-                    LocalDateTime from = LocalDateTime.parse(parts[3], formatter);
-
-                    LocalDateTime to =  LocalDateTime.parse(parts[4], formatter);
-
-                    task = new Event(parts[2], from, to);
-                }
-
-                if (isDone) {
-                    task.markAsDone();
-                }
-
-                tasks.add(task);
-            }
-
-            fileScanner.close();
-        } catch (IOException e) {
-            printError("Sorry My Princess, I couldn't load your tasks.");
-        }
-
-        return tasks;
-    }
 }
-
 
