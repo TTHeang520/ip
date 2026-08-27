@@ -47,6 +47,10 @@ public class Task {
         return "";
     }
 
+    public String toFileString() {
+        return "";
+    }
+
     @Override
     public String toString() {
         return "[" + getTypeIcon() + "][" + getStatusIcon() + "] " + description;

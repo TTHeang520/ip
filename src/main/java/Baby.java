@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -6,7 +9,7 @@ import java.util.Scanner;
  */
 public class Baby {
     private static final String LINE = "____________________________________________________________";
-
+    private static final String FILE_PATH = "./data/baby.txt";
     /**
      * Starts the command loop for the task manager.
      *
@@ -14,7 +17,7 @@ public class Baby {
      */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ArrayList<Task> tasks = new ArrayList<>();
+        ArrayList<Task> tasks = loadTasks();
 
         printResponse("Hello! I'm Baby.", "What can I do for you, your highness.");
 
@@ -49,6 +52,7 @@ public class Baby {
 
                 Task task = new Todo(description);
                 tasks.add(task);
+                saveTasks(tasks);
                 printTaskAdded(task, tasks.size());
             } else if (input.equals(Command.DEADLINE.getCommandWord())
                     || input.startsWith(Command.DEADLINE.getCommandWord() + " ")) {
@@ -58,6 +62,7 @@ public class Baby {
                 }
 
                 tasks.add(deadline);
+                saveTasks(tasks);
                 printTaskAdded(deadline, tasks.size());
             } else if (input.equals(Command.EVENT.getCommandWord())
                     || input.startsWith(Command.EVENT.getCommandWord() + " ")) {
@@ -67,6 +72,7 @@ public class Baby {
                 }
 
                 tasks.add(event);
+                saveTasks(tasks);
                 printTaskAdded(event, tasks.size());
             } else if (input.isEmpty()) {
                 printError("OOPS! Please enter a command.");
@@ -162,6 +168,7 @@ public class Baby {
 
         Task task = tasks.get(index);
         task.markAsDone();
+        saveTasks(tasks);
         printResponse("Nice! I've marked this task as done:", " " + task);
     }
 
@@ -179,6 +186,7 @@ public class Baby {
 
         Task task = tasks.get(index);
         task.markAsNotDone();
+        saveTasks(tasks);
         printResponse("OK, I've marked this task as not done yet:", " " + task);
     }
 
@@ -195,6 +203,7 @@ public class Baby {
         }
 
         Task removedTask = tasks.remove(index);
+        saveTasks(tasks);
         printResponse(
                 "Noted. I've removed this task:",
                 " " + removedTask,
@@ -268,4 +277,66 @@ public class Baby {
         }
         System.out.println(LINE);
     }
+
+    private static void saveTasks (ArrayList<Task> tasks) {
+        try {
+            File dataFolder = new File("./data"); //create new file object
+            dataFolder.mkdirs();
+
+            FileWriter writer = new FileWriter(FILE_PATH);
+
+            for (Task task : tasks) {
+                writer.write(task.toFileString() + System.lineSeparator());
+            }
+
+            writer.close();
+        } catch (IOException e) {
+            printError("Sorry My Princess, I couldn't save your tasks.");
+        }
+    }
+
+    private static ArrayList<Task> loadTasks() {
+        ArrayList<Task> tasks = new ArrayList<>();
+        File file = new File(FILE_PATH);
+
+        if (!file.exists()) {
+            return tasks;
+        }
+
+        try {
+            Scanner fileScanner = new Scanner(file);
+
+            while (fileScanner.hasNextLine()) {
+                String line = fileScanner.nextLine();
+                String[] parts = line.split(" \\| ");
+
+                String type = parts[0];
+                boolean isDone = parts[1].equals("1");
+
+                Task task;
+
+                if (type.equals("T")) {
+                    task = new Todo(parts[2]);
+                } else if (type.equals("D")) {
+                    task = new Deadline(parts[2], parts[3]);
+                } else {
+                    task = new Event(parts[2], parts[3], parts[4]);
+                }
+
+                if (isDone) {
+                    task.markAsDone();
+                }
+
+                tasks.add(task);
+            }
+
+            fileScanner.close();
+        } catch (IOException e) {
+            printError("Sorry My Princess, I couldn't load your tasks.");
+        }
+
+        return tasks;
+    }
 }
+
+
