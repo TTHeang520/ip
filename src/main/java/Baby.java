@@ -3,7 +3,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 /**
  * Runs the Baby command-line task manager.
  */
@@ -98,16 +100,25 @@ public class Baby {
         }
 
         String description = parts[0].trim();
-        String by = parts[1].trim();
+        String byText = parts[1].trim();
         if (description.isEmpty()) {
             printError("OOPS! A deadline needs a description before /by.");
             return null;
-        } else if (by.isEmpty()) {
+        } else if (byText.isEmpty()) {
             printError("OOPS! A deadline needs a date or time after /by.");
             return null;
         }
 
-        return new Deadline(description, by);
+        DateTimeFormatter formatter =
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+
+        try {
+            LocalDateTime by = LocalDateTime.parse(byText, formatter);
+            return new Deadline(description, by);
+        } catch (DateTimeParseException e) {
+            printError("OOPS! Please use the format yyyy-MM-dd HHmm.");
+            return null;
+        }
     }
 
     private static Event createEvent(String input) {
@@ -138,20 +149,30 @@ public class Baby {
             return null;
         }
 
-        String from = fromAndTo[0].trim();
-        String to = fromAndTo[1].trim();
+        String fromText = fromAndTo[0].trim();
+        String toText = fromAndTo[1].trim();
         if (description.isEmpty()) {
             printError("OOPS! An event needs a description before /from.");
             return null;
-        } else if (from.isEmpty()) {
+        } else if (fromText.isEmpty()) {
             printError("OOPS! An event needs a start time after /from.");
             return null;
-        } else if (to.isEmpty()) {
+        } else if (toText.isEmpty()) {
             printError("OOPS! An event needs an end time after /to.");
             return null;
         }
 
-        return new Event(description, from, to);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+
+        try {
+            LocalDateTime from = LocalDateTime.parse(fromText, formatter);
+            LocalDateTime to = LocalDateTime.parse(toText, formatter);
+
+            return new Event(description, from, to);
+        }catch (DateTimeParseException e) {
+            printError("OOPS!Please use the format yyyy-MM-dd HHmm. My princess.");
+            return null;
+        }
     }
 
     /**
@@ -318,9 +339,21 @@ public class Baby {
                 if (type.equals("T")) {
                     task = new Todo(parts[2]);
                 } else if (type.equals("D")) {
-                    task = new Deadline(parts[2], parts[3]);
+                    DateTimeFormatter formatter =
+                            DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+
+                    LocalDateTime by =
+                            LocalDateTime.parse(parts[3], formatter);
+
+                    task = new Deadline(parts[2], by);
                 } else {
-                    task = new Event(parts[2], parts[3], parts[4]);
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+
+                    LocalDateTime from = LocalDateTime.parse(parts[3], formatter);
+
+                    LocalDateTime to =  LocalDateTime.parse(parts[4], formatter);
+
+                    task = new Event(parts[2], from, to);
                 }
 
                 if (isDone) {

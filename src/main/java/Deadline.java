@@ -1,8 +1,11 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 /**
  * Represents a task that should be completed by a specific date or time.
  */
+
 public class Deadline extends Task {
-    private String by;
+    private LocalDateTime by;
 
     /**
      * Creates a deadline task with the given description and deadline.
@@ -10,7 +13,7 @@ public class Deadline extends Task {
      * @param description Description of the deadline task.
      * @param by Deadline text.
      */
-    public Deadline(String description, String by) {
+    public Deadline(String description, LocalDateTime by) {
         super(description);
         this.by = by;
     }
@@ -22,11 +25,22 @@ public class Deadline extends Task {
 
     @Override
     public String toFileString() {
-        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + by;
+        DateTimeFormatter formatter =
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+
+        return "D | "
+                + (isDone ? "1" : "0")
+                + " | "
+                + description
+                + " | "
+                + by.format(formatter);
     }
 
     @Override
     public String toString() {
-        return super.toString() + " (by: " + by + ")";
+        DateTimeFormatter formatter =
+                DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
+
+        return super.toString() + " (by: " + by.format(formatter) + ")";
     }
 }
