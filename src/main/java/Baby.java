@@ -30,14 +30,18 @@ public class Baby {
                 break;
             } else if (input.equals("list")) {
                 printTaskList(tasks);
-            } else if (isCommand(input, Command.MARK)) {
-                markTask(input, tasks, true);
-            } else if (isCommand(input, Command.UNMARK)) {
-                markTask(input, tasks, false);
-            } else if (isCommand(input, Command.DELETE)) {
+            } else if (input.equals(Command.MARK.getCommandWord())
+                    || input.startsWith(Command.MARK.getCommandWord() + " ")) {
+                markTask(input, tasks);
+            } else if (input.equals(Command.UNMARK.getCommandWord())
+                    || input.startsWith(Command.UNMARK.getCommandWord() + " ")) {
+                unmarkTask(input, tasks);
+            } else if (input.equals(Command.DELETE.getCommandWord())
+                    || input.startsWith(Command.DELETE.getCommandWord() + " ")) {
                 deleteTask(input, tasks);
-            } else if (isCommand(input, Command.TODO)) {
-                String description = getCommandArgument(input, Command.TODO.getCommandWord());
+            } else if (input.equals(Command.TODO.getCommandWord())
+                    || input.startsWith(Command.TODO.getCommandWord() + " ")) {
+                String description = input.substring(Command.TODO.getCommandWord().length()).trim();
                 if (description.isEmpty()) {
                     printError("OOPS! A todo needs a description. Try: todo read book");
                     continue;
@@ -46,7 +50,8 @@ public class Baby {
                 Task task = new Todo(description);
                 tasks.add(task);
                 printTaskAdded(task, tasks.size());
-            } else if (isCommand(input, Command.DEADLINE)) {
+            } else if (input.equals(Command.DEADLINE.getCommandWord())
+                    || input.startsWith(Command.DEADLINE.getCommandWord() + " ")) {
                 Deadline deadline = createDeadline(input);
                 if (deadline == null) {
                     continue;
@@ -54,7 +59,8 @@ public class Baby {
 
                 tasks.add(deadline);
                 printTaskAdded(deadline, tasks.size());
-            } else if (isCommand(input, Command.EVENT)) {
+            } else if (input.equals(Command.EVENT.getCommandWord())
+                    || input.startsWith(Command.EVENT.getCommandWord() + " ")) {
                 Event event = createEvent(input);
                 if (event == null) {
                     continue;
@@ -72,16 +78,21 @@ public class Baby {
     }
 
     private static Deadline createDeadline(String input) {
-        String details = getCommandArgument(input, Command.DEADLINE.getCommandWord());
-        int byMarkerIndex = findMarkerIndex(details, "/by");
+        String details = input.substring(Command.DEADLINE.getCommandWord().length()).trim();
+        String[] parts;
+        if (details.startsWith("/by ")) {
+            parts = new String[] { "", details.substring("/by ".length()) };
+        } else {
+            parts = details.split(" /by ", 2);
+        }
 
-        if (byMarkerIndex == -1) {
+        if (parts.length < 2) {
             printError("OOPS! A deadline needs a description and /by. Try: deadline return book /by Sunday");
             return null;
         }
 
-        String description = details.substring(0, byMarkerIndex).trim();
-        String by = details.substring(byMarkerIndex + "/by".length()).trim();
+        String description = parts[0].trim();
+        String by = parts[1].trim();
         if (description.isEmpty()) {
             printError("OOPS! A deadline needs a description before /by.");
             return null;
@@ -94,25 +105,35 @@ public class Baby {
     }
 
     private static Event createEvent(String input) {
-        String details = getCommandArgument(input, Command.EVENT.getCommandWord());
-        int fromMarkerIndex = findMarkerIndex(details, "/from");
+        String details = input.substring(Command.EVENT.getCommandWord().length()).trim();
+        String[] descriptionAndTimes;
+        if (details.startsWith("/from ")) {
+            descriptionAndTimes = new String[] { "", details.substring("/from ".length()) };
+        } else {
+            descriptionAndTimes = details.split(" /from ", 2);
+        }
 
-        if (fromMarkerIndex == -1) {
+        if (descriptionAndTimes.length < 2) {
             printError("OOPS! An event needs a description, /from, and /to. Try: event meeting /from Mon 2pm /to 4pm");
             return null;
         }
 
-        String description = details.substring(0, fromMarkerIndex).trim();
-        String fromAndTo = details.substring(fromMarkerIndex + "/from".length()).trim();
-        int toMarkerIndex = findMarkerIndex(fromAndTo, "/to");
+        String description = descriptionAndTimes[0].trim();
+        String times = descriptionAndTimes[1].trim();
+        String[] fromAndTo;
+        if (times.startsWith("/to ")) {
+            fromAndTo = new String[] { "", times.substring("/to ".length()) };
+        } else {
+            fromAndTo = times.split(" /to ", 2);
+        }
 
-        if (toMarkerIndex == -1) {
+        if (fromAndTo.length < 2) {
             printError("OOPS! An event needs an end time after /to.");
             return null;
         }
 
-        String from = fromAndTo.substring(0, toMarkerIndex).trim();
-        String to = fromAndTo.substring(toMarkerIndex + "/to".length()).trim();
+        String from = fromAndTo[0].trim();
+        String to = fromAndTo[1].trim();
         if (description.isEmpty()) {
             printError("OOPS! An event needs a description before /from.");
             return null;
@@ -128,47 +149,37 @@ public class Baby {
     }
 
     /**
-     * Finds a marker such as /by only when it appears as a separate command marker.
-     *
-     * @param details The text after the command word.
-     * @param marker The marker to find.
-     * @return The marker's starting index, or -1 if it is missing.
-     */
-    private static int findMarkerIndex(String details, String marker) {
-        if (details.startsWith(marker + " ")) {
-            return 0;
-        }
-
-        int markerIndex = details.indexOf(" " + marker + " ");
-        if (markerIndex == -1) {
-            return -1;
-        }
-
-        return markerIndex + 1;
-    }
-
-    /**
-     * Marks or unmarks a task after checking that the task number is valid.
+     * Marks a task as done after checking that the task number is valid.
      *
      * @param input The full user command.
      * @param tasks The current task list.
-     * @param isMarkingDone Whether to mark the task as done or not done.
      */
-    private static void markTask(String input, ArrayList<Task> tasks, boolean isMarkingDone) {
-        Command command = isMarkingDone ? Command.MARK : Command.UNMARK;
-        int index = getTaskIndex(input, command.getCommandWord(), tasks.size());
+    private static void markTask(String input, ArrayList<Task> tasks) {
+        int index = getTaskIndex(input, Command.MARK.getCommandWord(), tasks.size());
         if (index == -1) {
             return;
         }
 
         Task task = tasks.get(index);
-        if (isMarkingDone) {
-            task.markAsDone();
-            printResponse("Nice! I've marked this task as done:", " " + task);
-        } else {
-            task.markAsNotDone();
-            printResponse("OK, I've marked this task as not done yet:", " " + task);
+        task.markAsDone();
+        printResponse("Nice! I've marked this task as done:", " " + task);
+    }
+
+    /**
+     * Marks a task as not done after checking that the task number is valid.
+     *
+     * @param input The full user command.
+     * @param tasks The current task list.
+     */
+    private static void unmarkTask(String input, ArrayList<Task> tasks) {
+        int index = getTaskIndex(input, Command.UNMARK.getCommandWord(), tasks.size());
+        if (index == -1) {
+            return;
         }
+
+        Task task = tasks.get(index);
+        task.markAsNotDone();
+        printResponse("OK, I've marked this task as not done yet:", " " + task);
     }
 
     /**
@@ -199,7 +210,7 @@ public class Baby {
      * @return The valid 0-based task index, or -1 if the input is invalid.
      */
     private static int getTaskIndex(String input, String command, int taskCount) {
-        String taskNumberText = getCommandArgument(input, command);
+        String taskNumberText = input.substring(command.length()).trim();
 
         if (taskNumberText.isEmpty()) {
             printError("OOPS! Please give me a task number to " + command + ". Try: " + command + " 1");
@@ -220,33 +231,6 @@ public class Baby {
         }
 
         return taskNumber - 1;
-    }
-
-    /**
-     * Gets the text after the command word.
-     *
-     * @param input The full user command.
-     * @param command The command word at the start of the input.
-     * @return The trimmed argument text, or an empty string if there is none.
-     */
-    private static String getCommandArgument(String input, String command) {
-        if (input.length() == command.length()) {
-            return "";
-        }
-
-        return input.substring(command.length() + 1).trim();
-    }
-
-    /**
-     * Checks whether the input is exactly the command or starts with the command and a space.
-     *
-     * @param input The full user command.
-     * @param command The command word to check.
-     * @return True if the input uses the given command word.
-     */
-    private static boolean isCommand(String input, Command command) {
-        String commandWord = command.getCommandWord();
-        return input.equals(commandWord) || input.startsWith(commandWord + " ");
     }
 
     private static void printTaskAdded(Task task, int taskCount) {

@@ -1,5 +1,5 @@
 /**
- * Represents the fixed set of command words that Baby understands.
+ * Represents the command words that Baby understands.
  */
 public enum Command {
     TODO("todo"),
@@ -12,16 +12,16 @@ public enum Command {
     private final String commandWord;
 
     /**
-     * Creates a command type with the exact word the user types.
+     * Creates a command with the word typed by the user.
      *
-     * @param commandWord Text used to invoke this command.
+     * @param commandWord The text used to run this command.
      */
     Command(String commandWord) {
         this.commandWord = commandWord;
     }
 
     /**
-     * Returns the exact command word typed by the user.
+     * Returns the word typed by the user for this command.
      *
      * @return The command word.
      */
