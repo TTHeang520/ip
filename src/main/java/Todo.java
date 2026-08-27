@@ -15,4 +15,10 @@ public class Todo extends Task {
     public String getTypeIcon() {
         return "T";
     }
+
+    @Override
+    public String toFileString() {
+        return "T | " + (isDone ? "1" : "0") + " | " + description;
+    }
+
 }
