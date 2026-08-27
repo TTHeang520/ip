@@ -1,3 +1,4 @@
+package baby;
 /**
  * Runs the Baby command-line task manager.
  */

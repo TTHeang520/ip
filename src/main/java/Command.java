@@ -1,3 +1,4 @@
+package baby;
 /**
  * Represents the command words that Baby understands.
  */
