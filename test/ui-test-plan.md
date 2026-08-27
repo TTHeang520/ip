@@ -438,6 +438,67 @@ ____________________________________________________________
 ____________________________________________________________
 ```
 
+## Test Case 7: Find Matching Tasks
+
+Aim: Verify that find lists tasks whose descriptions contain the keyword and rejects an empty keyword.
+
+Command:
+
+```bash
+javac -d out/test-ui src/main/java/*.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby
+```
+
+Inputs:
+
+```text
+todo read book
+deadline return book /by 2026-08-30 1200
+event project meeting /from 2026-08-31 1400 /to 2026-08-31 1600
+mark 1
+find book
+find
+bye
+```
+
+Expected output:
+
+```text
+____________________________________________________________
+ Hello! I'm Baby.
+ What can I do for you, your highness.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+  [T][ ] read book
+ Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+  [D][ ] return book (by: Aug 30 2026, 12:00 PM)
+ Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+  [E][ ] project meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)
+ Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Nice! I've marked this task as done:
+  [T][X] read book
+____________________________________________________________
+____________________________________________________________
+ Here are the matching tasks in your list:
+ 1.[T][X] read book
+ 2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)
+____________________________________________________________
+____________________________________________________________
+ OOPS! Please give me a keyword to find.
+____________________________________________________________
+____________________________________________________________
+ Bye. I'll miss you.
+____________________________________________________________
+```
+
 ## Machine-Readable Test Cases
 
 ```json ui-tests
@@ -546,6 +607,21 @@ ____________________________________________________________
       "bye"
     ],
     "expected_output": "____________________________________________________________\n Hello! I'm Baby.\n What can I do for you, your highness.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [T][ ] first\n Now you have 1 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [T][ ] second\n Now you have 2 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Noted. I've removed this task:\n  [T][ ] first\n Now you have 1 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Here are the tasks in your list:\n 1.[T][ ] second\n____________________________________________________________\n____________________________________________________________\n Noted. I've removed this task:\n  [T][ ] second\n Now you have 0 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Here are the tasks in your list:\n____________________________________________________________\n____________________________________________________________\n OOPS! Task number 1 is not in your list.\n____________________________________________________________\n____________________________________________________________\n OOPS! Task number 0 is not in your list.\n____________________________________________________________\n____________________________________________________________\n OOPS! Task number -1 is not in your list.\n____________________________________________________________\n____________________________________________________________\n Bye. I'll miss you.\n____________________________________________________________\n"
+  },
+  {
+    "name": "Find Matching Tasks",
+    "aim": "Verify that find lists tasks whose descriptions contain the keyword and rejects an empty keyword.",
+    "command": "javac -d out/test-ui src/main/java/*.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby",
+    "input": [
+      "todo read book",
+      "deadline return book /by 2026-08-30 1200",
+      "event project meeting /from 2026-08-31 1400 /to 2026-08-31 1600",
+      "mark 1",
+      "find book",
+      "find",
+      "bye"
+    ],
+    "expected_output": "____________________________________________________________\n Hello! I'm Baby.\n What can I do for you, your highness.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [T][ ] read book\n Now you have 1 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [D][ ] return book (by: Aug 30 2026, 12:00 PM)\n Now you have 2 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [E][ ] project meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)\n Now you have 3 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Nice! I've marked this task as done:\n  [T][X] read book\n____________________________________________________________\n____________________________________________________________\n Here are the matching tasks in your list:\n 1.[T][X] read book\n 2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)\n____________________________________________________________\n____________________________________________________________\n OOPS! Please give me a keyword to find.\n____________________________________________________________\n____________________________________________________________\n Bye. I'll miss you.\n____________________________________________________________\n"
   }
 ]
 ```

@@ -1,4 +1,7 @@
 package baby;
+
+import java.util.ArrayList;
+
 /**
  * Runs the Baby command-line task manager.
  */
@@ -67,6 +70,9 @@ public class Baby {
                 tasks.add(event);
                 Storage.saveTasks(tasks.getTasks());
                 ui.printTaskAdded(event, tasks.size());
+            } else if (input.equals(Command.FIND.getCommandWord())
+                    || input.startsWith(Command.FIND.getCommandWord() + " ")) {
+                findTasks(input, tasks, ui);
             } else if (input.isEmpty()) {
                 ui.printError("OOPS! Please enter a command.");
             } else {
@@ -131,5 +137,30 @@ public class Baby {
                 " " + removedTask,
                 "Now you have " + tasks.size() + " tasks in the list.");
     }
-}
 
+    /**
+     * Finds tasks whose description contains the given keyword.
+     *
+     * @param input The full user command.
+     * @param tasks The current task list.
+     * @param ui The UI used to show results and errors.
+     */
+    private static void findTasks(String input, TaskList tasks, Ui ui) {
+        String keyword = input.substring(Command.FIND.getCommandWord().length()).trim();
+
+        if (keyword.isEmpty()) {
+            ui.printError("OOPS! Please give me a keyword to find.");
+            return;
+        }
+
+        ArrayList<Task> matchingTasks = new ArrayList<>();
+
+        for (Task task : tasks.getTasks()) {
+            if (task.getDescription().contains(keyword)) {
+                matchingTasks.add(task);
+            }
+        }
+
+        ui.printMatchingTasks(matchingTasks);
+    }
+}

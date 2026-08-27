@@ -83,6 +83,21 @@ public class Ui {
     }
 
     /**
+     * Prints tasks that match a find command.
+     *
+     * @param matchingTasks The tasks whose descriptions contain the keyword.
+     */
+    public void printMatchingTasks(ArrayList<Task> matchingTasks) {
+        String[] lines = new String[matchingTasks.size() + 1];
+        lines[0] = "Here are the matching tasks in your list:";
+        for (int i = 0; i < matchingTasks.size(); i++) {
+            lines[i + 1] = (i + 1) + "." + matchingTasks.get(i);
+        }
+
+        printResponse(lines);
+    }
+
+    /**
      * Prints an error message.
      *
      * @param message The error message to print.
