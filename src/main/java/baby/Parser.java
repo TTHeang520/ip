@@ -29,7 +29,7 @@ public class Parser {
         String details = input.substring(Command.DEADLINE.getCommandWord().length()).trim();
         String[] parts;
         if (details.startsWith("/by ")) {
-            parts = new String[] { "", details.substring("/by ".length()) };
+            parts = new String[] {"", details.substring("/by ".length())};
         } else {
             parts = details.split(" /by ", 2);
         }
@@ -73,7 +73,8 @@ public class Parser {
         String[] descriptionAndTimes = splitEventDescriptionAndTimes(details);
 
         if (descriptionAndTimes.length < 2) {
-            ui.printError("OOPS! An event needs a description, /from, and /to. Try: event meeting /from Mon 2pm /to 4pm");
+            ui.printError("OOPS! An event needs a description, /from, and /to. Try: "
+                    + "event meeting /from Mon 2pm /to 4pm");
             return null;
         }
 
@@ -104,7 +105,7 @@ public class Parser {
 
     private static String[] splitEventDescriptionAndTimes(String details) {
         if (details.startsWith("/from ")) {
-            return new String[] { "", details.substring("/from ".length()) };
+            return new String[] {"", details.substring("/from ".length())};
         }
 
         return details.split(" /from ", 2);
@@ -112,7 +113,7 @@ public class Parser {
 
     private static String[] splitEventTimes(String times) {
         if (times.startsWith("/to ")) {
-            return new String[] { "", times.substring("/to ".length()) };
+            return new String[] {"", times.substring("/to ".length())};
         }
 
         return times.split(" /to ", 2);
