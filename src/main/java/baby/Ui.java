@@ -10,12 +10,27 @@ public class Ui {
     private static final String LINE = "____________________________________________________________";
 
     private Scanner scanner;
+    private boolean shouldPrint;
+    private String lastResponse;
 
     /**
      * Creates a UI that reads commands from the command line.
      */
     public Ui() {
-        scanner = new Scanner(System.in);
+        this(true);
+    }
+
+    /**
+     * Creates a UI that can either print responses or only remember them.
+     *
+     * @param shouldPrint True if responses should be printed to the console.
+     */
+    public Ui(boolean shouldPrint) {
+        this.shouldPrint = shouldPrint;
+        lastResponse = "";
+        if (shouldPrint) {
+            scanner = new Scanner(System.in);
+        }
     }
 
     /**
@@ -24,6 +39,10 @@ public class Ui {
      * @return True if another command can be read.
      */
     public boolean hasNextLine() {
+        if (scanner == null) {
+            return false;
+        }
+
         return scanner.hasNextLine();
     }
 
@@ -33,6 +52,10 @@ public class Ui {
      * @return The trimmed command.
      */
     public String readCommand() {
+        if (scanner == null) {
+            return "";
+        }
+
         return scanner.nextLine().trim();
     }
 
@@ -40,7 +63,9 @@ public class Ui {
      * Closes the input scanner.
      */
     public void close() {
-        scanner.close();
+        if (scanner != null) {
+            scanner.close();
+        }
     }
 
     /**
@@ -112,10 +137,34 @@ public class Ui {
      * @param lines Lines to show inside the response box.
      */
     public void printResponse(String... lines) {
-        System.out.println(LINE);
-        for (String line : lines) {
-            System.out.println(" " + line);
+        lastResponse = formatResponse(lines);
+        if (shouldPrint) {
+            System.out.print(lastResponse);
         }
-        System.out.println(LINE);
+    }
+
+    /**
+     * Returns the most recent response created by this UI.
+     *
+     * @return The latest response text.
+     */
+    public String getLastResponse() {
+        return lastResponse;
+    }
+
+    /**
+     * Formats response lines in the same style used by the console UI.
+     *
+     * @param lines Lines to show inside the response box.
+     * @return The formatted response text.
+     */
+    private String formatResponse(String... lines) {
+        StringBuilder response = new StringBuilder();
+        response.append(LINE).append(System.lineSeparator());
+        for (String line : lines) {
+            response.append(" ").append(line).append(System.lineSeparator());
+        }
+        response.append(LINE).append(System.lineSeparator());
+        return response.toString();
     }
 }

@@ -1,0 +1,46 @@
+.dialog-label {
+    -fx-font: 14px "Arial";
+    -fx-text-fill: #173349;
+}
+
+.user-label {
+    -fx-background-color: linear-gradient(to bottom right, #ffffff, #e6edf4);
+    -fx-background-radius: 18px 18px 2px 18px;
+    -fx-border-color: rgba(255, 255, 255, 0.95);
+    -fx-border-radius: 18px 18px 2px 18px;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(68, 92, 119, 0.16), 8, 0.25, 0, 2);
+    -fx-font: 14px "Arial";
+    -fx-text-fill: #25364a;
+}
+
+.queen-label {
+    -fx-background-color: linear-gradient(to bottom right, #e9fbff, #9de7ff, #63bde9);
+    -fx-background-radius: 18px 18px 18px 2px;
+    -fx-border-color: rgba(236, 252, 255, 0.95);
+    -fx-border-radius: 18px 18px 18px 2px;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(33, 110, 165, 0.2), 10, 0.25, 0, 3);
+    -fx-font: 14px "Arial";
+    -fx-text-fill: #0f3857;
+}
+
+.error-label {
+    -fx-background-color: linear-gradient(to bottom right, #f5eaff, #c9a5ff, #8b6ae6);
+    -fx-background-radius: 18px 18px 18px 2px;
+    -fx-border-color: rgba(255, 245, 255, 0.95);
+    -fx-border-radius: 18px 18px 18px 2px;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(91, 49, 145, 0.22), 10, 0.25, 0, 3);
+    -fx-font: 14px "Arial";
+    -fx-text-fill: #23143f;
+}
+
+.user-row,
+.baby-row {
+    -fx-padding: 3px 4px;
+}
+
+#displayPicture {
+    -fx-effect: dropshadow(gaussian, rgba(8, 57, 90, 0.35), 13, 0.35, 0, 4);
+}

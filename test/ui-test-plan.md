@@ -11,7 +11,7 @@ Aim: Verify that the program starts, shows the greeting, accepts bye, and exits 
 Command:
 
 ```bash
-javac -d out/test-ui src/main/java/baby/*.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby
+javac -d out/test-ui -sourcepath src/main/java src/main/java/baby/Baby.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby
 ```
 
 Inputs:
@@ -39,7 +39,7 @@ Aim: Verify that todo, deadline, and event create the correct task types and dis
 Command:
 
 ```bash
-javac -d out/test-ui src/main/java/baby/*.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby
+javac -d out/test-ui -sourcepath src/main/java src/main/java/baby/Baby.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby
 ```
 
 Inputs:
@@ -92,7 +92,7 @@ Aim: Verify that typed tasks can still be marked and unmarked while keeping thei
 Command:
 
 ```bash
-javac -d out/test-ui src/main/java/baby/*.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby
+javac -d out/test-ui -sourcepath src/main/java src/main/java/baby/Baby.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby
 ```
 
 Inputs:
@@ -142,7 +142,7 @@ Aim: Verify that incorrect inputs show helpful error messages, do not crash the 
 Command:
 
 ```bash
-javac -d out/test-ui src/main/java/baby/*.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby
+javac -d out/test-ui -sourcepath src/main/java src/main/java/baby/Baby.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby
 ```
 
 Inputs:
@@ -256,7 +256,7 @@ Aim: Verify that delete removes the selected task, reports the removed task, and
 Command:
 
 ```bash
-javac -d out/test-ui src/main/java/baby/*.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby
+javac -d out/test-ui -sourcepath src/main/java src/main/java/baby/Baby.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby
 ```
 
 Inputs:
@@ -372,7 +372,7 @@ Aim: Verify that delete works for the first and last task, and rejects empty-lis
 Command:
 
 ```bash
-javac -d out/test-ui src/main/java/baby/*.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby
+javac -d out/test-ui -sourcepath src/main/java src/main/java/baby/Baby.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby
 ```
 
 Inputs:
@@ -445,7 +445,7 @@ Aim: Verify that find lists tasks whose descriptions contain the keyword and rej
 Command:
 
 ```bash
-javac -d out/test-ui src/main/java/*.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby
+javac -d out/test-ui -sourcepath src/main/java src/main/java/baby/Baby.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby
 ```
 
 Inputs:
@@ -506,7 +506,7 @@ ____________________________________________________________
   {
     "name": "Exit",
     "aim": "Verify that the program starts, shows the greeting, accepts bye, and exits with the farewell message.",
-    "command": "javac -d out/test-ui src/main/java/baby/*.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby",
+    "command": "javac -d out/test-ui -sourcepath src/main/java src/main/java/baby/Baby.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby",
     "input": [
       "bye"
     ],
@@ -515,7 +515,7 @@ ____________________________________________________________
   {
     "name": "Add Task Types And List",
     "aim": "Verify that todo, deadline, and event create the correct task types and display their extra date/time text.",
-    "command": "javac -d out/test-ui src/main/java/baby/*.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby",
+    "command": "javac -d out/test-ui -sourcepath src/main/java src/main/java/baby/Baby.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby",
     "input": [
       "todo borrow book",
       "deadline return book /by 2026-08-30 1200",
@@ -528,7 +528,7 @@ ____________________________________________________________
   {
     "name": "Mark And Unmark Typed Tasks",
     "aim": "Verify that typed tasks can still be marked and unmarked while keeping their type-specific display format.",
-    "command": "javac -d out/test-ui src/main/java/baby/*.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby",
+    "command": "javac -d out/test-ui -sourcepath src/main/java src/main/java/baby/Baby.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby",
     "input": [
       "todo read book",
       "deadline do homework /by 2026-09-01 2359",
@@ -541,7 +541,7 @@ ____________________________________________________________
   {
     "name": "Handle Incorrect Inputs",
     "aim": "Verify that incorrect inputs show helpful error messages, do not crash the program, and do not add invalid tasks to the list.",
-    "command": "javac -d out/test-ui src/main/java/baby/*.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby",
+    "command": "javac -d out/test-ui -sourcepath src/main/java src/main/java/baby/Baby.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby",
     "input": [
       "",
       "todo",
@@ -569,7 +569,7 @@ ____________________________________________________________
   {
     "name": "Delete Task And Renumber List",
     "aim": "Verify that delete removes the selected task, reports the removed task, and renumbers the remaining tasks.",
-    "command": "javac -d out/test-ui src/main/java/baby/*.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby",
+    "command": "javac -d out/test-ui -sourcepath src/main/java src/main/java/baby/Baby.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby",
     "input": [
       "todo read book",
       "deadline return book /by 2026-06-06 0900",
@@ -593,7 +593,7 @@ ____________________________________________________________
   {
     "name": "Delete Boundary Cases",
     "aim": "Verify that delete works for the first and last task, and rejects empty-list and lower-bound task numbers.",
-    "command": "javac -d out/test-ui src/main/java/baby/*.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby",
+    "command": "javac -d out/test-ui -sourcepath src/main/java src/main/java/baby/Baby.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby",
     "input": [
       "todo first",
       "todo second",
@@ -611,7 +611,7 @@ ____________________________________________________________
   {
     "name": "Find Matching Tasks",
     "aim": "Verify that find lists tasks whose descriptions contain the keyword and rejects an empty keyword.",
-    "command": "javac -d out/test-ui src/main/java/*.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby",
+    "command": "javac -d out/test-ui -sourcepath src/main/java src/main/java/baby/Baby.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby",
     "input": [
       "todo read book",
       "deadline return book /by 2026-08-30 1200",

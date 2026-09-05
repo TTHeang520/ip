@@ -6,6 +6,28 @@ import java.util.ArrayList;
  * Runs the Baby command-line task manager.
  */
 public class Baby {
+    private Ui ui;
+    private TaskList tasks;
+    private boolean isExit;
+
+    /**
+     * Creates a Baby chatbot for non-console use, such as the JavaFX GUI.
+     */
+    public Baby() {
+        this(new Ui(false));
+    }
+
+    /**
+     * Creates a Baby chatbot using the given UI.
+     *
+     * @param ui The UI used to format or print responses.
+     */
+    public Baby(Ui ui) {
+        this.ui = ui;
+        tasks = new TaskList(Storage.loadTasks());
+        isExit = false;
+    }
+
     /**
      * Starts the command loop for the task manager.
      *
@@ -13,7 +35,7 @@ public class Baby {
      */
     public static void main(String[] args) {
         Ui ui = new Ui();
-        TaskList tasks = new TaskList(Storage.loadTasks());
+        Baby baby = new Baby(ui);
 
         ui.showWelcome();
 
@@ -24,62 +46,116 @@ public class Baby {
 
             String input = ui.readCommand();
 
-            if (input.equals("bye")) {
-                ui.showGoodbye();
+            baby.getResponse(input);
+            if (baby.isExit()) {
                 break;
-            } else if (input.equals("list")) {
-                ui.printTaskList(tasks.getTasks());
-            } else if (input.equals(Command.MARK.getCommandWord())
-                    || input.startsWith(Command.MARK.getCommandWord() + " ")) {
-                markTask(input, tasks, ui);
-            } else if (input.equals(Command.UNMARK.getCommandWord())
-                    || input.startsWith(Command.UNMARK.getCommandWord() + " ")) {
-                unmarkTask(input, tasks, ui);
-            } else if (input.equals(Command.DELETE.getCommandWord())
-                    || input.startsWith(Command.DELETE.getCommandWord() + " ")) {
-                deleteTask(input, tasks, ui);
-            } else if (input.equals(Command.TODO.getCommandWord())
-                    || input.startsWith(Command.TODO.getCommandWord() + " ")) {
-                String description = Parser.getTodoDescription(input);
-                if (description.isEmpty()) {
-                    ui.printError("OOPS! A todo needs a description. Try: todo read book");
-                    continue;
-                }
-
-                Task task = new Todo(description);
-                tasks.add(task);
-                Storage.saveTasks(tasks.getTasks());
-                ui.printTaskAdded(task, tasks.size());
-            } else if (input.equals(Command.DEADLINE.getCommandWord())
-                    || input.startsWith(Command.DEADLINE.getCommandWord() + " ")) {
-                Deadline deadline = Parser.createDeadline(input, ui);
-                if (deadline == null) {
-                    continue;
-                }
-
-                tasks.add(deadline);
-                Storage.saveTasks(tasks.getTasks());
-                ui.printTaskAdded(deadline, tasks.size());
-            } else if (input.equals(Command.EVENT.getCommandWord())
-                    || input.startsWith(Command.EVENT.getCommandWord() + " ")) {
-                Event event = Parser.createEvent(input, ui);
-                if (event == null) {
-                    continue;
-                }
-
-                tasks.add(event);
-                Storage.saveTasks(tasks.getTasks());
-                ui.printTaskAdded(event, tasks.size());
-            } else if (input.equals(Command.FIND.getCommandWord())
-                    || input.startsWith(Command.FIND.getCommandWord() + " ")) {
-                findTasks(input, tasks, ui);
-            } else if (input.isEmpty()) {
-                ui.printError("OOPS! Please enter a command.");
-            } else {
-                ui.printError("OOPS! I don't recognise that command. Try todo, deadline, event, list, mark, unmark, delete, or bye.");
             }
         }
         ui.close();
+    }
+
+    /**
+     * Processes one user command and returns Baby's response.
+     *
+     * @param input The user command.
+     * @return The response that should be shown to the user.
+     */
+    public String getResponse(String input) {
+        input = input.trim();
+
+        if (input.equals("bye")) {
+            ui.showGoodbye();
+            isExit = true;
+        } else if (input.equals("list")) {
+            ui.printTaskList(tasks.getTasks());
+        } else if (input.equals(Command.MARK.getCommandWord())
+                || input.startsWith(Command.MARK.getCommandWord() + " ")) {
+            markTask(input, tasks, ui);
+        } else if (input.equals(Command.UNMARK.getCommandWord())
+                || input.startsWith(Command.UNMARK.getCommandWord() + " ")) {
+            unmarkTask(input, tasks, ui);
+        } else if (input.equals(Command.DELETE.getCommandWord())
+                || input.startsWith(Command.DELETE.getCommandWord() + " ")) {
+            deleteTask(input, tasks, ui);
+        } else if (input.equals(Command.TODO.getCommandWord())
+                || input.startsWith(Command.TODO.getCommandWord() + " ")) {
+            addTodo(input);
+        } else if (input.equals(Command.DEADLINE.getCommandWord())
+                || input.startsWith(Command.DEADLINE.getCommandWord() + " ")) {
+            addDeadline(input);
+        } else if (input.equals(Command.EVENT.getCommandWord())
+                || input.startsWith(Command.EVENT.getCommandWord() + " ")) {
+            addEvent(input);
+        } else if (input.equals(Command.FIND.getCommandWord())
+                || input.startsWith(Command.FIND.getCommandWord() + " ")) {
+            findTasks(input, tasks, ui);
+        } else if (input.isEmpty()) {
+            ui.printError("OOPS! Please enter a command.");
+        } else {
+            ui.printError("OOPS! I don't recognise that command. Try todo, deadline, event, list, "
+                    + "mark, unmark, delete, or bye.");
+        }
+
+        return ui.getLastResponse();
+    }
+
+    /**
+     * Returns whether the user has asked Baby to exit.
+     *
+     * @return True if the latest command was bye.
+     */
+    public boolean isExit() {
+        return isExit;
+    }
+
+    /**
+     * Adds a todo task if the user provided a description.
+     *
+     * @param input The full user command.
+     */
+    private void addTodo(String input) {
+        String description = Parser.getTodoDescription(input);
+        if (description.isEmpty()) {
+            ui.printError("OOPS! A todo needs a description. Try: todo read book");
+            return;
+        }
+
+        Task task = new Todo(description);
+        tasks.add(task);
+        Storage.saveTasks(tasks.getTasks());
+        ui.printTaskAdded(task, tasks.size());
+    }
+
+    /**
+     * Adds a deadline task if the user command is valid.
+     *
+     * @param input The full user command.
+     */
+    private void addDeadline(String input) {
+        Deadline deadline = Parser.createDeadline(input, ui);
+        if (deadline == null) {
+            return;
+        }
+
+        tasks.add(deadline);
+        Storage.saveTasks(tasks.getTasks());
+        ui.printTaskAdded(deadline, tasks.size());
+    }
+
+    /**
+     * Adds an event task if the user command is valid.
+     *
+     * @param input The full user command.
+     */
+    private void addEvent(String input) {
+        Event event = Parser.createEvent(input, ui);
+        if (event == null) {
+            return;
+        }
+
+        tasks.add(event);
+        Storage.saveTasks(tasks.getTasks());
+        ui.printTaskAdded(event, tasks.size());
     }
 
     /**
