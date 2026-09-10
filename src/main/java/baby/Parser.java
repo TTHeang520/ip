@@ -70,12 +70,7 @@ public class Parser {
      */
     public static Event createEvent(String input, Ui ui) {
         String details = input.substring(Command.EVENT.getCommandWord().length()).trim();
-        String[] descriptionAndTimes;
-        if (details.startsWith("/from ")) {
-            descriptionAndTimes = new String[] { "", details.substring("/from ".length()) };
-        } else {
-            descriptionAndTimes = details.split(" /from ", 2);
-        }
+        String[] descriptionAndTimes = splitEventDescriptionAndTimes(details);
 
         if (descriptionAndTimes.length < 2) {
             ui.printError("OOPS! An event needs a description, /from, and /to. Try: event meeting /from Mon 2pm /to 4pm");
@@ -84,12 +79,7 @@ public class Parser {
 
         String description = descriptionAndTimes[0].trim();
         String times = descriptionAndTimes[1].trim();
-        String[] fromAndTo;
-        if (times.startsWith("/to ")) {
-            fromAndTo = new String[] { "", times.substring("/to ".length()) };
-        } else {
-            fromAndTo = times.split(" /to ", 2);
-        }
+        String[] fromAndTo = splitEventTimes(times);
 
         if (fromAndTo.length < 2) {
             ui.printError("OOPS! An event needs an end time after /to.");
@@ -109,6 +99,26 @@ public class Parser {
             return null;
         }
 
+        return createEventWithParsedTimes(description, fromText, toText, ui);
+    }
+
+    private static String[] splitEventDescriptionAndTimes(String details) {
+        if (details.startsWith("/from ")) {
+            return new String[] { "", details.substring("/from ".length()) };
+        }
+
+        return details.split(" /from ", 2);
+    }
+
+    private static String[] splitEventTimes(String times) {
+        if (times.startsWith("/to ")) {
+            return new String[] { "", times.substring("/to ".length()) };
+        }
+
+        return times.split(" /to ", 2);
+    }
+
+    private static Event createEventWithParsedTimes(String description, String fromText, String toText, Ui ui) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
         try {
