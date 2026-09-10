@@ -1,6 +1,7 @@
 package baby;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * Runs the Baby command-line task manager.
@@ -238,13 +239,9 @@ public class Baby {
             return;
         }
 
-        ArrayList<Task> matchingTasks = new ArrayList<>();
-
-        for (Task task : tasks.getTasks()) {
-            if (task.getDescription().contains(keyword)) {
-                matchingTasks.add(task);
-            }
-        }
+        ArrayList<Task> matchingTasks = tasks.getTasks().stream()
+                .filter(task -> task.getDescription().contains(keyword))
+                .collect(Collectors.toCollection(ArrayList::new));
 
         ui.printMatchingTasks(matchingTasks);
     }
