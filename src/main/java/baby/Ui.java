@@ -113,6 +113,11 @@ public class Ui {
      * @param matchingTasks The tasks whose descriptions contain the keyword.
      */
     public void printMatchingTasks(ArrayList<Task> matchingTasks) {
+        if (matchingTasks.isEmpty()) {
+            printResponse("Oh snow! I couldn't find any matching tasks in your kingdom.");
+            return;
+        }
+
         String[] lines = new String[matchingTasks.size() + 1];
         lines[0] = "Here are the matching tasks in your list:";
         for (int i = 0; i < matchingTasks.size(); i++) {

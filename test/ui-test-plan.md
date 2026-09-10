@@ -440,7 +440,7 @@ ____________________________________________________________
 
 ## Test Case 7: Find Matching Tasks
 
-Aim: Verify that find lists tasks whose descriptions contain the keyword and rejects an empty keyword.
+Aim: Verify that find lists tasks using case-insensitive partial matching, reports no matches, and rejects an empty keyword.
 
 Command:
 
@@ -456,6 +456,9 @@ deadline return book /by 2026-08-30 1200
 event project meeting /from 2026-08-31 1400 /to 2026-08-31 1600
 mark 1
 find book
+find BOOK
+find boo
+find pen
 find
 bye
 ```
@@ -490,6 +493,19 @@ ____________________________________________________________
  Here are the matching tasks in your list:
  1.[T][X] read book
  2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)
+____________________________________________________________
+____________________________________________________________
+ Here are the matching tasks in your list:
+ 1.[T][X] read book
+ 2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)
+____________________________________________________________
+____________________________________________________________
+ Here are the matching tasks in your list:
+ 1.[T][X] read book
+ 2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)
+____________________________________________________________
+____________________________________________________________
+ Oh snow! I couldn't find any matching tasks in your kingdom.
 ____________________________________________________________
 ____________________________________________________________
  OOPS! Please give me a keyword to find.
@@ -610,7 +626,7 @@ ____________________________________________________________
   },
   {
     "name": "Find Matching Tasks",
-    "aim": "Verify that find lists tasks whose descriptions contain the keyword and rejects an empty keyword.",
+    "aim": "Verify that find lists tasks using case-insensitive partial matching, reports no matches, and rejects an empty keyword.",
     "command": "javac -d out/test-ui -sourcepath src/main/java src/main/java/baby/Baby.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby",
     "input": [
       "todo read book",
@@ -618,10 +634,13 @@ ____________________________________________________________
       "event project meeting /from 2026-08-31 1400 /to 2026-08-31 1600",
       "mark 1",
       "find book",
+      "find BOOK",
+      "find boo",
+      "find pen",
       "find",
       "bye"
     ],
-    "expected_output": "____________________________________________________________\n Hello! I'm Baby.\n What can I do for you, your highness.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [T][ ] read book\n Now you have 1 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [D][ ] return book (by: Aug 30 2026, 12:00 PM)\n Now you have 2 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [E][ ] project meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)\n Now you have 3 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Nice! I've marked this task as done:\n  [T][X] read book\n____________________________________________________________\n____________________________________________________________\n Here are the matching tasks in your list:\n 1.[T][X] read book\n 2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)\n____________________________________________________________\n____________________________________________________________\n OOPS! Please give me a keyword to find.\n____________________________________________________________\n____________________________________________________________\n Bye. I'll miss you.\n____________________________________________________________\n"
+    "expected_output": "____________________________________________________________\n Hello! I'm Baby.\n What can I do for you, your highness.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [T][ ] read book\n Now you have 1 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [D][ ] return book (by: Aug 30 2026, 12:00 PM)\n Now you have 2 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [E][ ] project meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)\n Now you have 3 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Nice! I've marked this task as done:\n  [T][X] read book\n____________________________________________________________\n____________________________________________________________\n Here are the matching tasks in your list:\n 1.[T][X] read book\n 2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)\n____________________________________________________________\n____________________________________________________________\n Here are the matching tasks in your list:\n 1.[T][X] read book\n 2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)\n____________________________________________________________\n____________________________________________________________\n Here are the matching tasks in your list:\n 1.[T][X] read book\n 2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)\n____________________________________________________________\n____________________________________________________________\n Oh snow! I couldn't find any matching tasks in your kingdom.\n____________________________________________________________\n____________________________________________________________\n OOPS! Please give me a keyword to find.\n____________________________________________________________\n____________________________________________________________\n Bye. I'll miss you.\n____________________________________________________________\n"
   }
 ]
 ```

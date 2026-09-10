@@ -24,6 +24,19 @@ expected output
 
 // Feature details
 
+## Finding tasks
+
+Use `find <keyword>` to search for tasks whose descriptions contain the keyword.
+Search is case-insensitive and supports partial matches.
+
+Examples:
+
+`find book`
+
+`find BOOK`
+
+`find boo`
+
 
 ## Feature XYZ
 

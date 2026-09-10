@@ -1,6 +1,7 @@
 package baby;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 /**
@@ -239,8 +240,9 @@ public class Baby {
             return;
         }
 
+        String normalizedKeyword = keyword.toLowerCase(Locale.ROOT);
         ArrayList<Task> matchingTasks = tasks.getTasks().stream()
-                .filter(task -> task.getDescription().contains(keyword))
+                .filter(task -> task.getDescription().toLowerCase(Locale.ROOT).contains(normalizedKeyword))
                 .collect(Collectors.toCollection(ArrayList::new));
 
         ui.printMatchingTasks(matchingTasks);
