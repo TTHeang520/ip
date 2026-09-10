@@ -171,6 +171,9 @@ public class Baby {
             return;
         }
 
+        assert index >= 0 && index < tasks.size()
+                : "Validated task index sould be within task list bounds";
+
         Task task = tasks.get(index);
         task.markAsDone();
         Storage.saveTasks(tasks.getTasks());
@@ -189,6 +192,9 @@ public class Baby {
             return;
         }
 
+        assert index >= 0 && index < tasks.size()
+                : "Validated task index should be within task list bounds";
+
         Task task = tasks.get(index);
         task.markAsNotDone();
         Storage.saveTasks(tasks.getTasks());
@@ -206,6 +212,9 @@ public class Baby {
         if (index == -1) {
             return;
         }
+
+        assert index >= 0 && index < tasks.size()
+                : "Validated task index should be within task list bounds";
 
         Task removedTask = tasks.remove(index);
         Storage.saveTasks(tasks.getTasks());
