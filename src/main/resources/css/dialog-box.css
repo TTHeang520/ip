@@ -1,6 +1,7 @@
 .dialog-label {
     -fx-font: 14px "Arial";
     -fx-text-fill: #173349;
+    -fx-line-spacing: 2px;
 }
 
 .user-label {
@@ -12,6 +13,7 @@
     -fx-effect: dropshadow(gaussian, rgba(68, 92, 119, 0.16), 8, 0.25, 0, 2);
     -fx-font: 14px "Arial";
     -fx-text-fill: #25364a;
+    -fx-label-padding: 1px;
 }
 
 .queen-label {
@@ -23,6 +25,7 @@
     -fx-effect: dropshadow(gaussian, rgba(33, 110, 165, 0.2), 10, 0.25, 0, 3);
     -fx-font: 14px "Arial";
     -fx-text-fill: #0f3857;
+    -fx-label-padding: 1px;
 }
 
 .error-label {
@@ -34,13 +37,40 @@
     -fx-effect: dropshadow(gaussian, rgba(91, 49, 145, 0.22), 10, 0.25, 0, 3);
     -fx-font: 14px "Arial";
     -fx-text-fill: #23143f;
+    -fx-label-padding: 1px;
 }
 
 .user-row,
 .baby-row {
-    -fx-padding: 3px 4px;
+    -fx-padding: 5px 8px;
 }
 
-#displayPicture {
-    -fx-effect: dropshadow(gaussian, rgba(8, 57, 90, 0.35), 13, 0.35, 0, 4);
+.avatar-text {
+    -fx-font: bold 13px "Arial";
+    -fx-text-fill: #22506c;
+}
+
+.baby-avatar,
+.error-avatar,
+.user-avatar {
+    -fx-alignment: center;
+    -fx-background-radius: 33px;
+    -fx-border-radius: 33px;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(8, 57, 90, 0.32), 10, 0.28, 0, 3);
+}
+
+.baby-avatar {
+    -fx-background-color: rgba(234, 252, 255, 0.76);
+    -fx-border-color: rgba(240, 253, 255, 0.95);
+}
+
+.error-avatar {
+    -fx-background-color: rgba(245, 234, 255, 0.8);
+    -fx-border-color: rgba(255, 245, 255, 0.95);
+}
+
+.user-avatar {
+    -fx-background-color: linear-gradient(to bottom right, #fafdff, #cfefff);
+    -fx-border-color: rgba(255, 255, 255, 0.96);
 }

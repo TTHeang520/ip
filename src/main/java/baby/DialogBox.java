@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 
 /**
  * Represents one row in the chat conversation.
@@ -22,6 +23,8 @@ public class DialogBox extends HBox {
             new Image(DialogBox.class.getResourceAsStream("/images/queen.png"));
     private static final Image SNOWMAN_IMAGE =
             new Image(DialogBox.class.getResourceAsStream("/images/snowman.png"));
+    private static final Image USER_IMAGE =
+            new Image(DialogBox.class.getResourceAsStream("/images/princess.png"));
 
     @FXML
     private Label dialog;
@@ -29,7 +32,14 @@ public class DialogBox extends HBox {
     @FXML
     private ImageView displayPicture;
 
-    private DialogBox(String text, Image image, String labelStyleClass) {
+    @FXML
+    private Label avatarText;
+
+    @FXML
+    private StackPane avatarFrame;
+
+    private DialogBox(String text, Image image, String avatarTextValue,
+            String labelStyleClass, String avatarStyleClass) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/DialogBox.fxml"));
             fxmlLoader.setController(this);
@@ -42,12 +52,17 @@ public class DialogBox extends HBox {
         dialog.setText(text);
         dialog.getStyleClass().add("dialog-label");
         dialog.getStyleClass().add(labelStyleClass);
+        dialog.maxWidthProperty().bind(widthProperty().multiply(0.68));
+        avatarFrame.getStyleClass().add(avatarStyleClass);
 
         if (image == null) {
             displayPicture.setVisible(false);
             displayPicture.setManaged(false);
+            avatarText.setText(avatarTextValue);
         } else {
             displayPicture.setImage(image);
+            avatarText.setVisible(false);
+            avatarText.setManaged(false);
         }
     }
 
@@ -68,7 +83,7 @@ public class DialogBox extends HBox {
      * @return The user's dialog row.
      */
     public static DialogBox getUserDialog(String text) {
-        DialogBox db = new DialogBox(text, null, "user-label");
+        DialogBox db = new DialogBox(text, USER_IMAGE, "", "user-label", "user-avatar");
         db.getStyleClass().add("user-row");
         return db;
     }
@@ -83,7 +98,8 @@ public class DialogBox extends HBox {
     public static DialogBox getBabyDialog(String text, boolean isError) {
         Image image = isError ? SNOWMAN_IMAGE : QUEEN_IMAGE;
         String styleClass = isError ? "error-label" : "queen-label";
-        DialogBox db = new DialogBox(text, image, styleClass);
+        String avatarStyleClass = isError ? "error-avatar" : "baby-avatar";
+        DialogBox db = new DialogBox(text, image, "", styleClass, avatarStyleClass);
         db.getStyleClass().add("baby-row");
         db.flip();
         return db;
