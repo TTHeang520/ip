@@ -72,14 +72,14 @@ public class Ui {
      * Prints the welcome message.
      */
     public void showWelcome() {
-        printResponse("Hello! I'm Baby.", "What can I do for you, your highness.");
+        printResponse("Welcome back, Your Highness!", "What would you like to do today?");
     }
 
     /**
      * Prints the goodbye message.
      */
     public void showGoodbye() {
-        printResponse("Bye. I'll miss you.");
+        printResponse("Until next time, Your Highness!", "Stay wonderful!");
     }
 
     /**
@@ -89,7 +89,10 @@ public class Ui {
      * @param taskCount The number of tasks after adding.
      */
     public void printTaskAdded(Task task, int taskCount) {
-        printResponse("Got it. I've added this task:", " " + task, "Now you have " + taskCount + " tasks in the list.");
+        printResponse(
+                "Consider it done, Your Highness!",
+                "I've added: " + task,
+                "You now have " + taskCount + " " + taskCountLabel(taskCount) + " in your list.");
     }
 
     /**
@@ -99,7 +102,7 @@ public class Ui {
      */
     public void printTaskList(ArrayList<Task> tasks) {
         String[] lines = new String[tasks.size() + 1];
-        lines[0] = "Here are the tasks in your list:";
+        lines[0] = "Your Highness, here are the tasks in your list:";
         for (int i = 0; i < tasks.size(); i++) {
             lines[i + 1] = (i + 1) + "." + tasks.get(i);
         }
@@ -114,12 +117,12 @@ public class Ui {
      */
     public void printMatchingTasks(ArrayList<Task> matchingTasks) {
         if (matchingTasks.isEmpty()) {
-            printResponse("Oh snow! I couldn't find any matching tasks in your kingdom.");
+            printResponse("No matching tasks were found, Your Highness.");
             return;
         }
 
         String[] lines = new String[matchingTasks.size() + 1];
-        lines[0] = "Here are the matching tasks in your list:";
+        lines[0] = "Here are the matching tasks, Your Highness:";
         for (int i = 0; i < matchingTasks.size(); i++) {
             lines[i + 1] = (i + 1) + "." + matchingTasks.get(i);
         }
@@ -155,6 +158,16 @@ public class Ui {
      */
     public String getLastResponse() {
         return lastResponse;
+    }
+
+    /**
+     * Returns the correctly pluralized label for a number of tasks.
+     *
+     * @param taskCount The number of tasks.
+     * @return "task" for one task, or "tasks" otherwise.
+     */
+    private String taskCountLabel(int taskCount) {
+        return taskCount == 1 ? "task" : "tasks";
     }
 
     /**

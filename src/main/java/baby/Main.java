@@ -29,8 +29,8 @@ public class Main extends Application {
             Scene scene = new Scene(root);
 
             stage.setTitle("Baby");
-            stage.setMinHeight(420.0);
-            stage.setMinWidth(360.0);
+            stage.setMinHeight(520.0);
+            stage.setMinWidth(420.0);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

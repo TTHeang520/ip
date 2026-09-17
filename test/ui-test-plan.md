@@ -24,11 +24,12 @@ Expected output:
 
 ```text
 ____________________________________________________________
- Hello! I'm Baby.
- What can I do for you, your highness.
+ Welcome back, Your Highness!
+ What would you like to do today?
 ____________________________________________________________
 ____________________________________________________________
- Bye. I'll miss you.
+ Until next time, Your Highness!
+ Stay wonderful!
 ____________________________________________________________
 ```
 
@@ -56,32 +57,33 @@ Expected output:
 
 ```text
 ____________________________________________________________
- Hello! I'm Baby.
- What can I do for you, your highness.
+ Welcome back, Your Highness!
+ What would you like to do today?
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
-  [T][ ] borrow book
- Now you have 1 tasks in the list.
+ Consider it done, Your Highness!
+ I've added: [T][ ] borrow book
+ You now have 1 task in your list.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
-  [D][ ] return book (by: Aug 30 2026, 12:00 PM)
- Now you have 2 tasks in the list.
+ Consider it done, Your Highness!
+ I've added: [D][ ] return book (by: Aug 30 2026, 12:00 PM)
+ You now have 2 tasks in your list.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
-  [E][ ] project meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)
- Now you have 3 tasks in the list.
+ Consider it done, Your Highness!
+ I've added: [E][ ] project meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)
+ You now have 3 tasks in your list.
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks in your list:
+ Your Highness, here are the tasks in your list:
  1.[T][ ] borrow book
  2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)
  3.[E][ ] project meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)
 ____________________________________________________________
 ____________________________________________________________
- Bye. I'll miss you.
+ Until next time, Your Highness!
+ Stay wonderful!
 ____________________________________________________________
 ```
 
@@ -109,29 +111,30 @@ Expected output:
 
 ```text
 ____________________________________________________________
- Hello! I'm Baby.
- What can I do for you, your highness.
+ Welcome back, Your Highness!
+ What would you like to do today?
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
-  [T][ ] read book
- Now you have 1 tasks in the list.
+ Consider it done, Your Highness!
+ I've added: [T][ ] read book
+ You now have 1 task in your list.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
-  [D][ ] do homework (by: Sep 01 2026, 11:59 PM)
- Now you have 2 tasks in the list.
+ Consider it done, Your Highness!
+ I've added: [D][ ] do homework (by: Sep 01 2026, 11:59 PM)
+ You now have 2 tasks in your list.
 ____________________________________________________________
 ____________________________________________________________
- Nice! I've marked this task as done:
+ Splendid! Task 2 is now marked as done:
   [D][X] do homework (by: Sep 01 2026, 11:59 PM)
 ____________________________________________________________
 ____________________________________________________________
- OK, I've marked this task as not done yet:
+ Certainly, Your Highness. Task 2 is marked as not done again:
   [D][ ] do homework (by: Sep 01 2026, 11:59 PM)
 ____________________________________________________________
 ____________________________________________________________
- Bye. I'll miss you.
+ Until next time, Your Highness!
+ Stay wonderful!
 ____________________________________________________________
 ```
 
@@ -174,78 +177,79 @@ Expected output:
 
 ```text
 ____________________________________________________________
- Hello! I'm Baby.
- What can I do for you, your highness.
+ Welcome back, Your Highness!
+ What would you like to do today?
 ____________________________________________________________
 ____________________________________________________________
- OOPS! Please enter a command.
+ Oh snow! Please enter a command.
 ____________________________________________________________
 ____________________________________________________________
- OOPS! A todo needs a description. Try: todo read book
+ Oh snow! A todo needs a description. Try: todo read book
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
-  [T][ ] read book
- Now you have 1 tasks in the list.
+ Consider it done, Your Highness!
+ I've added: [T][ ] read book
+ You now have 1 task in your list.
 ____________________________________________________________
 ____________________________________________________________
- OOPS! A deadline needs a description before /by.
+ Oh snow! A deadline needs a description before /by.
 ____________________________________________________________
 ____________________________________________________________
- OOPS! A deadline needs a description and /by. Try: deadline return book /by Sunday
+ Oh snow! A deadline needs a description and /by. Try: deadline return book /by Sunday
 ____________________________________________________________
 ____________________________________________________________
- OOPS! Please use the format yyyy-MM-dd HHmm.
+ Oh snow! Please use the format yyyy-MM-dd HHmm.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
-  [D][ ] return book (by: Aug 30 2026, 12:00 PM)
- Now you have 2 tasks in the list.
+ Consider it done, Your Highness!
+ I've added: [D][ ] return book (by: Aug 30 2026, 12:00 PM)
+ You now have 2 tasks in your list.
 ____________________________________________________________
 ____________________________________________________________
- OOPS! An event needs an end time after /to.
+ Oh snow! An event needs an end time after /to.
 ____________________________________________________________
 ____________________________________________________________
- OOPS! An event needs a description before /from.
+ Oh snow! An event needs a description before /from.
 ____________________________________________________________
 ____________________________________________________________
- OOPS! An event needs a start time after /from.
+ Oh snow! An event needs a start time after /from.
 ____________________________________________________________
 ____________________________________________________________
- OOPS! An event needs an end time after /to.
+ Oh snow! An event needs an end time after /to.
 ____________________________________________________________
 ____________________________________________________________
- OOPS!Please use the format yyyy-MM-dd HHmm. My princess.
+ Oh snow! Please use the format yyyy-MM-dd HHmm.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
-  [E][ ] meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)
- Now you have 3 tasks in the list.
+ Consider it done, Your Highness!
+ I've added: [E][ ] meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)
+ You now have 3 tasks in your list.
 ____________________________________________________________
 ____________________________________________________________
- OOPS! Please give me a task number to mark. Try: mark 1
+ Oh snow! Please give me a task number to mark. Try: mark 1
 ____________________________________________________________
 ____________________________________________________________
- OOPS! Task numbers must be whole numbers. Try: mark 1
+ Oh snow! Task numbers must be whole numbers. Try: mark 1
 ____________________________________________________________
 ____________________________________________________________
- OOPS! Task number 99 is not in your list.
+ Oh snow! Task number 99 is not in your list.
 ____________________________________________________________
 ____________________________________________________________
- Nice! I've marked this task as done:
+ Splendid! Task 2 is now marked as done:
   [D][X] return book (by: Aug 30 2026, 12:00 PM)
 ____________________________________________________________
 ____________________________________________________________
- OOPS! I don't recognise that command. Try todo, deadline, event, list, mark, unmark, delete, or bye.
+ Oh snow! I don't recognise that command. Try todo, deadline, event, list, mark, unmark, delete, or bye.
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks in your list:
+ Your Highness, here are the tasks in your list:
  1.[T][ ] read book
  2.[D][X] return book (by: Aug 30 2026, 12:00 PM)
  3.[E][ ] meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)
 ____________________________________________________________
 ____________________________________________________________
- Bye. I'll miss you.
+ Until next time, Your Highness!
+ Stay wonderful!
 ____________________________________________________________
 ```
 
@@ -284,48 +288,48 @@ Expected output:
 
 ```text
 ____________________________________________________________
- Hello! I'm Baby.
- What can I do for you, your highness.
+ Welcome back, Your Highness!
+ What would you like to do today?
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
-  [T][ ] read book
- Now you have 1 tasks in the list.
+ Consider it done, Your Highness!
+ I've added: [T][ ] read book
+ You now have 1 task in your list.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
-  [D][ ] return book (by: Jun 06 2026, 9:00 AM)
- Now you have 2 tasks in the list.
+ Consider it done, Your Highness!
+ I've added: [D][ ] return book (by: Jun 06 2026, 9:00 AM)
+ You now have 2 tasks in your list.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
-  [E][ ] project meeting (from: Aug 06 2026, 2:00 PM to: Aug 06 2026, 4:00 PM)
- Now you have 3 tasks in the list.
+ Consider it done, Your Highness!
+ I've added: [E][ ] project meeting (from: Aug 06 2026, 2:00 PM to: Aug 06 2026, 4:00 PM)
+ You now have 3 tasks in your list.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
-  [T][ ] join sports club
- Now you have 4 tasks in the list.
+ Consider it done, Your Highness!
+ I've added: [T][ ] join sports club
+ You now have 4 tasks in your list.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
-  [T][ ] borrow book
- Now you have 5 tasks in the list.
+ Consider it done, Your Highness!
+ I've added: [T][ ] borrow book
+ You now have 5 tasks in your list.
 ____________________________________________________________
 ____________________________________________________________
- Nice! I've marked this task as done:
+ Splendid! Task 1 is now marked as done:
   [T][X] read book
 ____________________________________________________________
 ____________________________________________________________
- Nice! I've marked this task as done:
+ Splendid! Task 2 is now marked as done:
   [D][X] return book (by: Jun 06 2026, 9:00 AM)
 ____________________________________________________________
 ____________________________________________________________
- Nice! I've marked this task as done:
+ Splendid! Task 4 is now marked as done:
   [T][X] join sports club
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks in your list:
+ Your Highness, here are the tasks in your list:
  1.[T][X] read book
  2.[D][X] return book (by: Jun 06 2026, 9:00 AM)
  3.[E][ ] project meeting (from: Aug 06 2026, 2:00 PM to: Aug 06 2026, 4:00 PM)
@@ -333,35 +337,36 @@ ____________________________________________________________
  5.[T][ ] borrow book
 ____________________________________________________________
 ____________________________________________________________
- Noted. I've removed this task:
-  [E][ ] project meeting (from: Aug 06 2026, 2:00 PM to: Aug 06 2026, 4:00 PM)
- Now you have 4 tasks in the list.
+ It's been removed, Your Highness.
+ Deleted: [E][ ] project meeting (from: Aug 06 2026, 2:00 PM to: Aug 06 2026, 4:00 PM)
+ You now have 4 tasks in your list.
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks in your list:
+ Your Highness, here are the tasks in your list:
  1.[T][X] read book
  2.[D][X] return book (by: Jun 06 2026, 9:00 AM)
  3.[T][X] join sports club
  4.[T][ ] borrow book
 ____________________________________________________________
 ____________________________________________________________
- OOPS! Please give me a task number to delete. Try: delete 1
+ Oh snow! Please give me a task number to delete. Try: delete 1
 ____________________________________________________________
 ____________________________________________________________
- OOPS! Task numbers must be whole numbers. Try: delete 1
+ Oh snow! Task numbers must be whole numbers. Try: delete 1
 ____________________________________________________________
 ____________________________________________________________
- OOPS! Task number 99 is not in your list.
+ Oh snow! Task number 99 is not in your list.
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks in your list:
+ Your Highness, here are the tasks in your list:
  1.[T][X] read book
  2.[D][X] return book (by: Jun 06 2026, 9:00 AM)
  3.[T][X] join sports club
  4.[T][ ] borrow book
 ____________________________________________________________
 ____________________________________________________________
- Bye. I'll miss you.
+ Until next time, Your Highness!
+ Stay wonderful!
 ____________________________________________________________
 ```
 
@@ -394,47 +399,48 @@ Expected output:
 
 ```text
 ____________________________________________________________
- Hello! I'm Baby.
- What can I do for you, your highness.
+ Welcome back, Your Highness!
+ What would you like to do today?
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
-  [T][ ] first
- Now you have 1 tasks in the list.
+ Consider it done, Your Highness!
+ I've added: [T][ ] first
+ You now have 1 task in your list.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
-  [T][ ] second
- Now you have 2 tasks in the list.
+ Consider it done, Your Highness!
+ I've added: [T][ ] second
+ You now have 2 tasks in your list.
 ____________________________________________________________
 ____________________________________________________________
- Noted. I've removed this task:
-  [T][ ] first
- Now you have 1 tasks in the list.
+ It's been removed, Your Highness.
+ Deleted: [T][ ] first
+ You now have 1 task in your list.
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks in your list:
+ Your Highness, here are the tasks in your list:
  1.[T][ ] second
 ____________________________________________________________
 ____________________________________________________________
- Noted. I've removed this task:
-  [T][ ] second
- Now you have 0 tasks in the list.
+ It's been removed, Your Highness.
+ Deleted: [T][ ] second
+ You now have 0 tasks in your list.
 ____________________________________________________________
 ____________________________________________________________
- Here are the tasks in your list:
+ Your Highness, here are the tasks in your list:
 ____________________________________________________________
 ____________________________________________________________
- OOPS! Task number 1 is not in your list.
+ Oh snow! Task number 1 is not in your list.
 ____________________________________________________________
 ____________________________________________________________
- OOPS! Task number 0 is not in your list.
+ Oh snow! Task number 0 is not in your list.
 ____________________________________________________________
 ____________________________________________________________
- OOPS! Task number -1 is not in your list.
+ Oh snow! Task number -1 is not in your list.
 ____________________________________________________________
 ____________________________________________________________
- Bye. I'll miss you.
+ Until next time, Your Highness!
+ Stay wonderful!
 ____________________________________________________________
 ```
 
@@ -467,51 +473,52 @@ Expected output:
 
 ```text
 ____________________________________________________________
- Hello! I'm Baby.
- What can I do for you, your highness.
+ Welcome back, Your Highness!
+ What would you like to do today?
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
-  [T][ ] read book
- Now you have 1 tasks in the list.
+ Consider it done, Your Highness!
+ I've added: [T][ ] read book
+ You now have 1 task in your list.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
-  [D][ ] return book (by: Aug 30 2026, 12:00 PM)
- Now you have 2 tasks in the list.
+ Consider it done, Your Highness!
+ I've added: [D][ ] return book (by: Aug 30 2026, 12:00 PM)
+ You now have 2 tasks in your list.
 ____________________________________________________________
 ____________________________________________________________
- Got it. I've added this task:
-  [E][ ] project meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)
- Now you have 3 tasks in the list.
+ Consider it done, Your Highness!
+ I've added: [E][ ] project meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)
+ You now have 3 tasks in your list.
 ____________________________________________________________
 ____________________________________________________________
- Nice! I've marked this task as done:
+ Splendid! Task 1 is now marked as done:
   [T][X] read book
 ____________________________________________________________
 ____________________________________________________________
- Here are the matching tasks in your list:
+ Here are the matching tasks, Your Highness:
  1.[T][X] read book
  2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)
 ____________________________________________________________
 ____________________________________________________________
- Here are the matching tasks in your list:
+ Here are the matching tasks, Your Highness:
  1.[T][X] read book
  2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)
 ____________________________________________________________
 ____________________________________________________________
- Here are the matching tasks in your list:
+ Here are the matching tasks, Your Highness:
  1.[T][X] read book
  2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)
 ____________________________________________________________
 ____________________________________________________________
- Oh snow! I couldn't find any matching tasks in your kingdom.
+ No matching tasks were found, Your Highness.
 ____________________________________________________________
 ____________________________________________________________
- OOPS! Please give me a keyword to find.
+ Oh snow! Please give me a keyword to find.
 ____________________________________________________________
 ____________________________________________________________
- Bye. I'll miss you.
+ Until next time, Your Highness!
+ Stay wonderful!
 ____________________________________________________________
 ```
 
@@ -526,7 +533,7 @@ ____________________________________________________________
     "input": [
       "bye"
     ],
-    "expected_output": "____________________________________________________________\n Hello! I'm Baby.\n What can I do for you, your highness.\n____________________________________________________________\n____________________________________________________________\n Bye. I'll miss you.\n____________________________________________________________\n"
+    "expected_output": "____________________________________________________________\n Welcome back, Your Highness!\n What would you like to do today?\n____________________________________________________________\n____________________________________________________________\n Until next time, Your Highness!\n Stay wonderful!\n____________________________________________________________\n"
   },
   {
     "name": "Add Task Types And List",
@@ -539,7 +546,7 @@ ____________________________________________________________
       "list",
       "bye"
     ],
-    "expected_output": "____________________________________________________________\n Hello! I'm Baby.\n What can I do for you, your highness.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [T][ ] borrow book\n Now you have 1 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [D][ ] return book (by: Aug 30 2026, 12:00 PM)\n Now you have 2 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [E][ ] project meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)\n Now you have 3 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Here are the tasks in your list:\n 1.[T][ ] borrow book\n 2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)\n 3.[E][ ] project meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)\n____________________________________________________________\n____________________________________________________________\n Bye. I'll miss you.\n____________________________________________________________\n"
+    "expected_output": "____________________________________________________________\n Welcome back, Your Highness!\n What would you like to do today?\n____________________________________________________________\n____________________________________________________________\n Consider it done, Your Highness!\n I've added: [T][ ] borrow book\n You now have 1 task in your list.\n____________________________________________________________\n____________________________________________________________\n Consider it done, Your Highness!\n I've added: [D][ ] return book (by: Aug 30 2026, 12:00 PM)\n You now have 2 tasks in your list.\n____________________________________________________________\n____________________________________________________________\n Consider it done, Your Highness!\n I've added: [E][ ] project meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)\n You now have 3 tasks in your list.\n____________________________________________________________\n____________________________________________________________\n Your Highness, here are the tasks in your list:\n 1.[T][ ] borrow book\n 2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)\n 3.[E][ ] project meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)\n____________________________________________________________\n____________________________________________________________\n Until next time, Your Highness!\n Stay wonderful!\n____________________________________________________________\n"
   },
   {
     "name": "Mark And Unmark Typed Tasks",
@@ -552,7 +559,7 @@ ____________________________________________________________
       "unmark 2",
       "bye"
     ],
-    "expected_output": "____________________________________________________________\n Hello! I'm Baby.\n What can I do for you, your highness.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [T][ ] read book\n Now you have 1 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [D][ ] do homework (by: Sep 01 2026, 11:59 PM)\n Now you have 2 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Nice! I've marked this task as done:\n  [D][X] do homework (by: Sep 01 2026, 11:59 PM)\n____________________________________________________________\n____________________________________________________________\n OK, I've marked this task as not done yet:\n  [D][ ] do homework (by: Sep 01 2026, 11:59 PM)\n____________________________________________________________\n____________________________________________________________\n Bye. I'll miss you.\n____________________________________________________________\n"
+    "expected_output": "____________________________________________________________\n Welcome back, Your Highness!\n What would you like to do today?\n____________________________________________________________\n____________________________________________________________\n Consider it done, Your Highness!\n I've added: [T][ ] read book\n You now have 1 task in your list.\n____________________________________________________________\n____________________________________________________________\n Consider it done, Your Highness!\n I've added: [D][ ] do homework (by: Sep 01 2026, 11:59 PM)\n You now have 2 tasks in your list.\n____________________________________________________________\n____________________________________________________________\n Splendid! Task 2 is now marked as done:\n  [D][X] do homework (by: Sep 01 2026, 11:59 PM)\n____________________________________________________________\n____________________________________________________________\n Certainly, Your Highness. Task 2 is marked as not done again:\n  [D][ ] do homework (by: Sep 01 2026, 11:59 PM)\n____________________________________________________________\n____________________________________________________________\n Until next time, Your Highness!\n Stay wonderful!\n____________________________________________________________\n"
   },
   {
     "name": "Handle Incorrect Inputs",
@@ -580,7 +587,7 @@ ____________________________________________________________
       "list",
       "bye"
     ],
-    "expected_output": "____________________________________________________________\n Hello! I'm Baby.\n What can I do for you, your highness.\n____________________________________________________________\n____________________________________________________________\n OOPS! Please enter a command.\n____________________________________________________________\n____________________________________________________________\n OOPS! A todo needs a description. Try: todo read book\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [T][ ] read book\n Now you have 1 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n OOPS! A deadline needs a description before /by.\n____________________________________________________________\n____________________________________________________________\n OOPS! A deadline needs a description and /by. Try: deadline return book /by Sunday\n____________________________________________________________\n____________________________________________________________\n OOPS! Please use the format yyyy-MM-dd HHmm.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [D][ ] return book (by: Aug 30 2026, 12:00 PM)\n Now you have 2 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n OOPS! An event needs an end time after /to.\n____________________________________________________________\n____________________________________________________________\n OOPS! An event needs a description before /from.\n____________________________________________________________\n____________________________________________________________\n OOPS! An event needs a start time after /from.\n____________________________________________________________\n____________________________________________________________\n OOPS! An event needs an end time after /to.\n____________________________________________________________\n____________________________________________________________\n OOPS!Please use the format yyyy-MM-dd HHmm. My princess.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [E][ ] meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)\n Now you have 3 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n OOPS! Please give me a task number to mark. Try: mark 1\n____________________________________________________________\n____________________________________________________________\n OOPS! Task numbers must be whole numbers. Try: mark 1\n____________________________________________________________\n____________________________________________________________\n OOPS! Task number 99 is not in your list.\n____________________________________________________________\n____________________________________________________________\n Nice! I've marked this task as done:\n  [D][X] return book (by: Aug 30 2026, 12:00 PM)\n____________________________________________________________\n____________________________________________________________\n OOPS! I don't recognise that command. Try todo, deadline, event, list, mark, unmark, delete, or bye.\n____________________________________________________________\n____________________________________________________________\n Here are the tasks in your list:\n 1.[T][ ] read book\n 2.[D][X] return book (by: Aug 30 2026, 12:00 PM)\n 3.[E][ ] meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)\n____________________________________________________________\n____________________________________________________________\n Bye. I'll miss you.\n____________________________________________________________\n"
+    "expected_output": "____________________________________________________________\n Welcome back, Your Highness!\n What would you like to do today?\n____________________________________________________________\n____________________________________________________________\n Oh snow! Please enter a command.\n____________________________________________________________\n____________________________________________________________\n Oh snow! A todo needs a description. Try: todo read book\n____________________________________________________________\n____________________________________________________________\n Consider it done, Your Highness!\n I've added: [T][ ] read book\n You now have 1 task in your list.\n____________________________________________________________\n____________________________________________________________\n Oh snow! A deadline needs a description before /by.\n____________________________________________________________\n____________________________________________________________\n Oh snow! A deadline needs a description and /by. Try: deadline return book /by Sunday\n____________________________________________________________\n____________________________________________________________\n Oh snow! Please use the format yyyy-MM-dd HHmm.\n____________________________________________________________\n____________________________________________________________\n Consider it done, Your Highness!\n I've added: [D][ ] return book (by: Aug 30 2026, 12:00 PM)\n You now have 2 tasks in your list.\n____________________________________________________________\n____________________________________________________________\n Oh snow! An event needs an end time after /to.\n____________________________________________________________\n____________________________________________________________\n Oh snow! An event needs a description before /from.\n____________________________________________________________\n____________________________________________________________\n Oh snow! An event needs a start time after /from.\n____________________________________________________________\n____________________________________________________________\n Oh snow! An event needs an end time after /to.\n____________________________________________________________\n____________________________________________________________\n Oh snow! Please use the format yyyy-MM-dd HHmm.\n____________________________________________________________\n____________________________________________________________\n Consider it done, Your Highness!\n I've added: [E][ ] meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)\n You now have 3 tasks in your list.\n____________________________________________________________\n____________________________________________________________\n Oh snow! Please give me a task number to mark. Try: mark 1\n____________________________________________________________\n____________________________________________________________\n Oh snow! Task numbers must be whole numbers. Try: mark 1\n____________________________________________________________\n____________________________________________________________\n Oh snow! Task number 99 is not in your list.\n____________________________________________________________\n____________________________________________________________\n Splendid! Task 2 is now marked as done:\n  [D][X] return book (by: Aug 30 2026, 12:00 PM)\n____________________________________________________________\n____________________________________________________________\n Oh snow! I don't recognise that command. Try todo, deadline, event, list, mark, unmark, delete, or bye.\n____________________________________________________________\n____________________________________________________________\n Your Highness, here are the tasks in your list:\n 1.[T][ ] read book\n 2.[D][X] return book (by: Aug 30 2026, 12:00 PM)\n 3.[E][ ] meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)\n____________________________________________________________\n____________________________________________________________\n Until next time, Your Highness!\n Stay wonderful!\n____________________________________________________________\n"
   },
   {
     "name": "Delete Task And Renumber List",
@@ -604,7 +611,7 @@ ____________________________________________________________
       "list",
       "bye"
     ],
-    "expected_output": "____________________________________________________________\n Hello! I'm Baby.\n What can I do for you, your highness.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [T][ ] read book\n Now you have 1 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [D][ ] return book (by: Jun 06 2026, 9:00 AM)\n Now you have 2 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [E][ ] project meeting (from: Aug 06 2026, 2:00 PM to: Aug 06 2026, 4:00 PM)\n Now you have 3 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [T][ ] join sports club\n Now you have 4 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [T][ ] borrow book\n Now you have 5 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Nice! I've marked this task as done:\n  [T][X] read book\n____________________________________________________________\n____________________________________________________________\n Nice! I've marked this task as done:\n  [D][X] return book (by: Jun 06 2026, 9:00 AM)\n____________________________________________________________\n____________________________________________________________\n Nice! I've marked this task as done:\n  [T][X] join sports club\n____________________________________________________________\n____________________________________________________________\n Here are the tasks in your list:\n 1.[T][X] read book\n 2.[D][X] return book (by: Jun 06 2026, 9:00 AM)\n 3.[E][ ] project meeting (from: Aug 06 2026, 2:00 PM to: Aug 06 2026, 4:00 PM)\n 4.[T][X] join sports club\n 5.[T][ ] borrow book\n____________________________________________________________\n____________________________________________________________\n Noted. I've removed this task:\n  [E][ ] project meeting (from: Aug 06 2026, 2:00 PM to: Aug 06 2026, 4:00 PM)\n Now you have 4 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Here are the tasks in your list:\n 1.[T][X] read book\n 2.[D][X] return book (by: Jun 06 2026, 9:00 AM)\n 3.[T][X] join sports club\n 4.[T][ ] borrow book\n____________________________________________________________\n____________________________________________________________\n OOPS! Please give me a task number to delete. Try: delete 1\n____________________________________________________________\n____________________________________________________________\n OOPS! Task numbers must be whole numbers. Try: delete 1\n____________________________________________________________\n____________________________________________________________\n OOPS! Task number 99 is not in your list.\n____________________________________________________________\n____________________________________________________________\n Here are the tasks in your list:\n 1.[T][X] read book\n 2.[D][X] return book (by: Jun 06 2026, 9:00 AM)\n 3.[T][X] join sports club\n 4.[T][ ] borrow book\n____________________________________________________________\n____________________________________________________________\n Bye. I'll miss you.\n____________________________________________________________\n"
+    "expected_output": "____________________________________________________________\n Welcome back, Your Highness!\n What would you like to do today?\n____________________________________________________________\n____________________________________________________________\n Consider it done, Your Highness!\n I've added: [T][ ] read book\n You now have 1 task in your list.\n____________________________________________________________\n____________________________________________________________\n Consider it done, Your Highness!\n I've added: [D][ ] return book (by: Jun 06 2026, 9:00 AM)\n You now have 2 tasks in your list.\n____________________________________________________________\n____________________________________________________________\n Consider it done, Your Highness!\n I've added: [E][ ] project meeting (from: Aug 06 2026, 2:00 PM to: Aug 06 2026, 4:00 PM)\n You now have 3 tasks in your list.\n____________________________________________________________\n____________________________________________________________\n Consider it done, Your Highness!\n I've added: [T][ ] join sports club\n You now have 4 tasks in your list.\n____________________________________________________________\n____________________________________________________________\n Consider it done, Your Highness!\n I've added: [T][ ] borrow book\n You now have 5 tasks in your list.\n____________________________________________________________\n____________________________________________________________\n Splendid! Task 1 is now marked as done:\n  [T][X] read book\n____________________________________________________________\n____________________________________________________________\n Splendid! Task 2 is now marked as done:\n  [D][X] return book (by: Jun 06 2026, 9:00 AM)\n____________________________________________________________\n____________________________________________________________\n Splendid! Task 4 is now marked as done:\n  [T][X] join sports club\n____________________________________________________________\n____________________________________________________________\n Your Highness, here are the tasks in your list:\n 1.[T][X] read book\n 2.[D][X] return book (by: Jun 06 2026, 9:00 AM)\n 3.[E][ ] project meeting (from: Aug 06 2026, 2:00 PM to: Aug 06 2026, 4:00 PM)\n 4.[T][X] join sports club\n 5.[T][ ] borrow book\n____________________________________________________________\n____________________________________________________________\n It's been removed, Your Highness.\n Deleted: [E][ ] project meeting (from: Aug 06 2026, 2:00 PM to: Aug 06 2026, 4:00 PM)\n You now have 4 tasks in your list.\n____________________________________________________________\n____________________________________________________________\n Your Highness, here are the tasks in your list:\n 1.[T][X] read book\n 2.[D][X] return book (by: Jun 06 2026, 9:00 AM)\n 3.[T][X] join sports club\n 4.[T][ ] borrow book\n____________________________________________________________\n____________________________________________________________\n Oh snow! Please give me a task number to delete. Try: delete 1\n____________________________________________________________\n____________________________________________________________\n Oh snow! Task numbers must be whole numbers. Try: delete 1\n____________________________________________________________\n____________________________________________________________\n Oh snow! Task number 99 is not in your list.\n____________________________________________________________\n____________________________________________________________\n Your Highness, here are the tasks in your list:\n 1.[T][X] read book\n 2.[D][X] return book (by: Jun 06 2026, 9:00 AM)\n 3.[T][X] join sports club\n 4.[T][ ] borrow book\n____________________________________________________________\n____________________________________________________________\n Until next time, Your Highness!\n Stay wonderful!\n____________________________________________________________\n"
   },
   {
     "name": "Delete Boundary Cases",
@@ -622,7 +629,7 @@ ____________________________________________________________
       "delete -1",
       "bye"
     ],
-    "expected_output": "____________________________________________________________\n Hello! I'm Baby.\n What can I do for you, your highness.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [T][ ] first\n Now you have 1 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [T][ ] second\n Now you have 2 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Noted. I've removed this task:\n  [T][ ] first\n Now you have 1 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Here are the tasks in your list:\n 1.[T][ ] second\n____________________________________________________________\n____________________________________________________________\n Noted. I've removed this task:\n  [T][ ] second\n Now you have 0 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Here are the tasks in your list:\n____________________________________________________________\n____________________________________________________________\n OOPS! Task number 1 is not in your list.\n____________________________________________________________\n____________________________________________________________\n OOPS! Task number 0 is not in your list.\n____________________________________________________________\n____________________________________________________________\n OOPS! Task number -1 is not in your list.\n____________________________________________________________\n____________________________________________________________\n Bye. I'll miss you.\n____________________________________________________________\n"
+    "expected_output": "____________________________________________________________\n Welcome back, Your Highness!\n What would you like to do today?\n____________________________________________________________\n____________________________________________________________\n Consider it done, Your Highness!\n I've added: [T][ ] first\n You now have 1 task in your list.\n____________________________________________________________\n____________________________________________________________\n Consider it done, Your Highness!\n I've added: [T][ ] second\n You now have 2 tasks in your list.\n____________________________________________________________\n____________________________________________________________\n It's been removed, Your Highness.\n Deleted: [T][ ] first\n You now have 1 task in your list.\n____________________________________________________________\n____________________________________________________________\n Your Highness, here are the tasks in your list:\n 1.[T][ ] second\n____________________________________________________________\n____________________________________________________________\n It's been removed, Your Highness.\n Deleted: [T][ ] second\n You now have 0 tasks in your list.\n____________________________________________________________\n____________________________________________________________\n Your Highness, here are the tasks in your list:\n____________________________________________________________\n____________________________________________________________\n Oh snow! Task number 1 is not in your list.\n____________________________________________________________\n____________________________________________________________\n Oh snow! Task number 0 is not in your list.\n____________________________________________________________\n____________________________________________________________\n Oh snow! Task number -1 is not in your list.\n____________________________________________________________\n____________________________________________________________\n Until next time, Your Highness!\n Stay wonderful!\n____________________________________________________________\n"
   },
   {
     "name": "Find Matching Tasks",
@@ -640,7 +647,7 @@ ____________________________________________________________
       "find",
       "bye"
     ],
-    "expected_output": "____________________________________________________________\n Hello! I'm Baby.\n What can I do for you, your highness.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [T][ ] read book\n Now you have 1 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [D][ ] return book (by: Aug 30 2026, 12:00 PM)\n Now you have 2 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Got it. I've added this task:\n  [E][ ] project meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)\n Now you have 3 tasks in the list.\n____________________________________________________________\n____________________________________________________________\n Nice! I've marked this task as done:\n  [T][X] read book\n____________________________________________________________\n____________________________________________________________\n Here are the matching tasks in your list:\n 1.[T][X] read book\n 2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)\n____________________________________________________________\n____________________________________________________________\n Here are the matching tasks in your list:\n 1.[T][X] read book\n 2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)\n____________________________________________________________\n____________________________________________________________\n Here are the matching tasks in your list:\n 1.[T][X] read book\n 2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)\n____________________________________________________________\n____________________________________________________________\n Oh snow! I couldn't find any matching tasks in your kingdom.\n____________________________________________________________\n____________________________________________________________\n OOPS! Please give me a keyword to find.\n____________________________________________________________\n____________________________________________________________\n Bye. I'll miss you.\n____________________________________________________________\n"
+    "expected_output": "____________________________________________________________\n Welcome back, Your Highness!\n What would you like to do today?\n____________________________________________________________\n____________________________________________________________\n Consider it done, Your Highness!\n I've added: [T][ ] read book\n You now have 1 task in your list.\n____________________________________________________________\n____________________________________________________________\n Consider it done, Your Highness!\n I've added: [D][ ] return book (by: Aug 30 2026, 12:00 PM)\n You now have 2 tasks in your list.\n____________________________________________________________\n____________________________________________________________\n Consider it done, Your Highness!\n I've added: [E][ ] project meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)\n You now have 3 tasks in your list.\n____________________________________________________________\n____________________________________________________________\n Splendid! Task 1 is now marked as done:\n  [T][X] read book\n____________________________________________________________\n____________________________________________________________\n Here are the matching tasks, Your Highness:\n 1.[T][X] read book\n 2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)\n____________________________________________________________\n____________________________________________________________\n Here are the matching tasks, Your Highness:\n 1.[T][X] read book\n 2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)\n____________________________________________________________\n____________________________________________________________\n Here are the matching tasks, Your Highness:\n 1.[T][X] read book\n 2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)\n____________________________________________________________\n____________________________________________________________\n No matching tasks were found, Your Highness.\n____________________________________________________________\n____________________________________________________________\n Oh snow! Please give me a keyword to find.\n____________________________________________________________\n____________________________________________________________\n Until next time, Your Highness!\n Stay wonderful!\n____________________________________________________________\n"
   }
 ]
 ```
