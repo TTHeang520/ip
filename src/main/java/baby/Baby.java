@@ -63,7 +63,7 @@ public class Baby {
      * @return The response that should be shown to the user.
      */
     public String getResponse(String input) {
-        input = input.trim();
+        input = Parser.normalizeInput(input);
 
         if (input.equals("bye")) {
             ui.showGoodbye();
@@ -134,7 +134,10 @@ public class Baby {
 
         Task task = new Todo(description);
         tasks.add(task);
-        Storage.saveTasks(tasks.getTasks());
+        if (!saveTasks(tasks, ui)) {
+            tasks.remove(tasks.size() - 1);
+            return;
+        }
         ui.printTaskAdded(task, tasks.size());
     }
 
@@ -150,7 +153,10 @@ public class Baby {
         }
 
         tasks.add(deadline);
-        Storage.saveTasks(tasks.getTasks());
+        if (!saveTasks(tasks, ui)) {
+            tasks.remove(tasks.size() - 1);
+            return;
+        }
         ui.printTaskAdded(deadline, tasks.size());
     }
 
@@ -166,7 +172,10 @@ public class Baby {
         }
 
         tasks.add(event);
-        Storage.saveTasks(tasks.getTasks());
+        if (!saveTasks(tasks, ui)) {
+            tasks.remove(tasks.size() - 1);
+            return;
+        }
         ui.printTaskAdded(event, tasks.size());
     }
 
@@ -187,7 +196,10 @@ public class Baby {
 
         Task task = tasks.get(index);
         task.markAsDone();
-        Storage.saveTasks(tasks.getTasks());
+        if (!saveTasks(tasks, ui)) {
+            task.markAsNotDone();
+            return;
+        }
         ui.printResponse("Splendid! Task " + (index + 1) + " is now marked as done:", " " + task);
     }
 
@@ -208,7 +220,10 @@ public class Baby {
 
         Task task = tasks.get(index);
         task.markAsNotDone();
-        Storage.saveTasks(tasks.getTasks());
+        if (!saveTasks(tasks, ui)) {
+            task.markAsDone();
+            return;
+        }
         ui.printResponse(
                 "Certainly, Your Highness. Task " + (index + 1) + " is marked as not done again:",
                 " " + task);
@@ -230,7 +245,10 @@ public class Baby {
                 : "Validated task index should be within task list bounds";
 
         Task removedTask = tasks.remove(index);
-        Storage.saveTasks(tasks.getTasks());
+        if (!saveTasks(tasks, ui)) {
+            tasks.getTasks().add(index, removedTask);
+            return;
+        }
         ui.printResponse(
                 "It's been removed, Your Highness.",
                 "Deleted: " + removedTask,
@@ -259,5 +277,14 @@ public class Baby {
                 .collect(Collectors.toCollection(ArrayList::new));
 
         ui.printMatchingTasks(matchingTasks);
+    }
+
+    private static boolean saveTasks(TaskList tasks, Ui ui) {
+        if (Storage.saveTasks(tasks.getTasks())) {
+            return true;
+        }
+
+        ui.printError("Oh snow! I couldn't save your tasks to the data file.");
+        return false;
     }
 }

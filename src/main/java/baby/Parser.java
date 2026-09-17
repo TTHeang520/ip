@@ -3,11 +3,25 @@ package baby;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 /**
  * Parses user commands into task details and task numbers.
  */
 public class Parser {
+    private static final DateTimeFormatter DATE_TIME_FORMATTER =
+            DateTimeFormatter.ofPattern("uuuu-MM-dd HHmm").withResolverStyle(ResolverStyle.STRICT);
+
+    /**
+     * Removes leading and trailing whitespace and collapses repeated whitespace.
+     *
+     * @param input The raw user input.
+     * @return A normalized command, or an empty string for null input.
+     */
+    public static String normalizeInput(String input) {
+        return input == null ? "" : input.trim().replaceAll("\\s+", " ");
+    }
+
     /**
      * Gets the description part of a todo command.
      *
@@ -27,20 +41,18 @@ public class Parser {
      */
     public static Deadline createDeadline(String input, Ui ui) {
         String details = input.substring(Command.DEADLINE.getCommandWord().length()).trim();
-        String[] parts;
-        if (details.startsWith("/by ")) {
-            parts = new String[] {"", details.substring("/by ".length())};
-        } else {
-            parts = details.split(" /by ", 2);
-        }
-
-        if (parts.length < 2) {
+        int byCount = countToken(details, "/by");
+        if (byCount == 0) {
             ui.printError("Oh snow! A deadline needs a description and /by. Try: deadline return book /by Sunday");
+            return null;
+        } else if (byCount > 1) {
+            ui.printError("Oh snow! A deadline can only have one /by parameter.");
             return null;
         }
 
-        String description = parts[0].trim();
-        String byText = parts[1].trim();
+        int byIndex = details.indexOf("/by");
+        String description = details.substring(0, byIndex).trim();
+        String byText = details.substring(byIndex + "/by".length()).trim();
         if (description.isEmpty()) {
             ui.printError("Oh snow! A deadline needs a description before /by.");
             return null;
@@ -49,12 +61,8 @@ public class Parser {
             return null;
         }
 
-        DateTimeFormatter formatter =
-                DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-
         try {
-            LocalDateTime by = LocalDateTime.parse(byText, formatter);
-            return new Deadline(description, by);
+            return new Deadline(description, parseDateTime(byText));
         } catch (DateTimeParseException e) {
             ui.printError("Oh snow! Please use the format yyyy-MM-dd HHmm.");
             return null;
@@ -70,25 +78,33 @@ public class Parser {
      */
     public static Event createEvent(String input, Ui ui) {
         String details = input.substring(Command.EVENT.getCommandWord().length()).trim();
-        String[] descriptionAndTimes = splitEventDescriptionAndTimes(details);
-
-        if (descriptionAndTimes.length < 2) {
+        int fromCount = countToken(details, "/from");
+        int toCount = countToken(details, "/to");
+        if (fromCount == 0) {
             ui.printError("Oh snow! An event needs a description, /from, and /to. Try: "
                     + "event meeting /from Mon 2pm /to 4pm");
             return null;
-        }
-
-        String description = descriptionAndTimes[0].trim();
-        String times = descriptionAndTimes[1].trim();
-        String[] fromAndTo = splitEventTimes(times);
-
-        if (fromAndTo.length < 2) {
+        } else if (fromCount > 1) {
+            ui.printError("Oh snow! An event can only have one /from parameter.");
+            return null;
+        } else if (toCount == 0) {
             ui.printError("Oh snow! An event needs an end time after /to.");
+            return null;
+        } else if (toCount > 1) {
+            ui.printError("Oh snow! An event can only have one /to parameter.");
             return null;
         }
 
-        String fromText = fromAndTo[0].trim();
-        String toText = fromAndTo[1].trim();
+        int fromIndex = details.indexOf("/from");
+        int toIndex = details.indexOf("/to");
+        if (toIndex < fromIndex) {
+            ui.printError("Oh snow! Please place /from before /to.");
+            return null;
+        }
+
+        String description = details.substring(0, fromIndex).trim();
+        String fromText = details.substring(fromIndex + "/from".length(), toIndex).trim();
+        String toText = details.substring(toIndex + "/to".length()).trim();
         if (description.isEmpty()) {
             ui.printError("Oh snow! An event needs a description before /from.");
             return null;
@@ -103,34 +119,34 @@ public class Parser {
         return createEventWithParsedTimes(description, fromText, toText, ui);
     }
 
-    private static String[] splitEventDescriptionAndTimes(String details) {
-        if (details.startsWith("/from ")) {
-            return new String[] {"", details.substring("/from ".length())};
-        }
-
-        return details.split(" /from ", 2);
-    }
-
-    private static String[] splitEventTimes(String times) {
-        if (times.startsWith("/to ")) {
-            return new String[] {"", times.substring("/to ".length())};
-        }
-
-        return times.split(" /to ", 2);
-    }
-
     private static Event createEventWithParsedTimes(String description, String fromText, String toText, Ui ui) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-
         try {
-            LocalDateTime from = LocalDateTime.parse(fromText, formatter);
-            LocalDateTime to = LocalDateTime.parse(toText, formatter);
+            LocalDateTime from = parseDateTime(fromText);
+            LocalDateTime to = parseDateTime(toText);
+            if (!to.isAfter(from)) {
+                ui.printError("Oh snow! An event's end time must be after its start time.");
+                return null;
+            }
 
             return new Event(description, from, to);
         } catch (DateTimeParseException e) {
             ui.printError("Oh snow! Please use the format yyyy-MM-dd HHmm.");
             return null;
         }
+    }
+
+    private static int countToken(String text, String token) {
+        int count = 0;
+        for (String part : text.split(" ")) {
+            if (part.equals(token)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    static LocalDateTime parseDateTime(String text) {
+        return LocalDateTime.parse(text, DATE_TIME_FORMATTER);
     }
 
     /**

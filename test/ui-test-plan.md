@@ -522,6 +522,78 @@ ____________________________________________________________
 ____________________________________________________________
 ```
 
+## Test Case 8: Handle Additional Malformed Inputs
+
+Aim: Verify whitespace normalization, duplicate parameters, strict dates, event ordering, and invalid indices.
+
+Command:
+
+```bash
+javac -d out/test-ui -sourcepath src/main/java src/main/java/baby/Baby.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby
+```
+
+Inputs:
+
+```text
+   todo    spaced    task
+deadline test /by 2026-02-30 1200
+deadline test /by 2026-08-30 1200 /by 2026-09-01 1200
+event meeting /from 2026-08-30 1000 /from 2026-08-30 1100 /to 2026-08-30 1200
+event meeting /from 2026-08-30 1400 /to 2026-08-30 1200
+event meeting /to 2026-08-30 1400 /from 2026-08-30 1200
+mark 0
+unmark 2
+delete 1 2
+list
+bye
+```
+
+Expected output:
+
+```text
+____________________________________________________________
+ Welcome back, Your Highness!
+ What would you like to do today?
+____________________________________________________________
+____________________________________________________________
+ Consider it done, Your Highness!
+ I've added: [T][ ] spaced task
+ You now have 1 task in your list.
+____________________________________________________________
+____________________________________________________________
+ Oh snow! Please use the format yyyy-MM-dd HHmm.
+____________________________________________________________
+____________________________________________________________
+ Oh snow! A deadline can only have one /by parameter.
+____________________________________________________________
+____________________________________________________________
+ Oh snow! An event can only have one /from parameter.
+____________________________________________________________
+____________________________________________________________
+ Oh snow! An event's end time must be after its start time.
+____________________________________________________________
+____________________________________________________________
+ Oh snow! Please place /from before /to.
+____________________________________________________________
+____________________________________________________________
+ Oh snow! Task number 0 is not in your list.
+____________________________________________________________
+____________________________________________________________
+ Oh snow! Task number 2 is not in your list.
+____________________________________________________________
+____________________________________________________________
+ Oh snow! Task numbers must be whole numbers. Try: delete 1
+____________________________________________________________
+____________________________________________________________
+ Your Highness, here are the tasks in your list:
+ 1.[T][ ] spaced task
+____________________________________________________________
+____________________________________________________________
+ Until next time, Your Highness!
+ Stay wonderful!
+____________________________________________________________
+```
+
 ## Machine-Readable Test Cases
 
 ```json ui-tests
@@ -648,6 +720,25 @@ ____________________________________________________________
       "bye"
     ],
     "expected_output": "____________________________________________________________\n Welcome back, Your Highness!\n What would you like to do today?\n____________________________________________________________\n____________________________________________________________\n Consider it done, Your Highness!\n I've added: [T][ ] read book\n You now have 1 task in your list.\n____________________________________________________________\n____________________________________________________________\n Consider it done, Your Highness!\n I've added: [D][ ] return book (by: Aug 30 2026, 12:00 PM)\n You now have 2 tasks in your list.\n____________________________________________________________\n____________________________________________________________\n Consider it done, Your Highness!\n I've added: [E][ ] project meeting (from: Aug 31 2026, 2:00 PM to: Aug 31 2026, 4:00 PM)\n You now have 3 tasks in your list.\n____________________________________________________________\n____________________________________________________________\n Splendid! Task 1 is now marked as done:\n  [T][X] read book\n____________________________________________________________\n____________________________________________________________\n Here are the matching tasks, Your Highness:\n 1.[T][X] read book\n 2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)\n____________________________________________________________\n____________________________________________________________\n Here are the matching tasks, Your Highness:\n 1.[T][X] read book\n 2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)\n____________________________________________________________\n____________________________________________________________\n Here are the matching tasks, Your Highness:\n 1.[T][X] read book\n 2.[D][ ] return book (by: Aug 30 2026, 12:00 PM)\n____________________________________________________________\n____________________________________________________________\n No matching tasks were found, Your Highness.\n____________________________________________________________\n____________________________________________________________\n Oh snow! Please give me a keyword to find.\n____________________________________________________________\n____________________________________________________________\n Until next time, Your Highness!\n Stay wonderful!\n____________________________________________________________\n"
+  },
+  {
+    "name": "Handle Additional Malformed Inputs",
+    "aim": "Verify whitespace normalization, duplicate parameters, strict dates, event ordering, and invalid indices.",
+    "command": "javac -d out/test-ui -sourcepath src/main/java src/main/java/baby/Baby.java && java -Dbaby.filePath=$(mktemp) -cp out/test-ui baby.Baby",
+    "input": [
+      "   todo    spaced    task   ",
+      "deadline test /by 2026-02-30 1200",
+      "deadline test /by 2026-08-30 1200 /by 2026-09-01 1200",
+      "event meeting /from 2026-08-30 1000 /from 2026-08-30 1100 /to 2026-08-30 1200",
+      "event meeting /from 2026-08-30 1400 /to 2026-08-30 1200",
+      "event meeting /to 2026-08-30 1400 /from 2026-08-30 1200",
+      "mark 0",
+      "unmark 2",
+      "delete 1 2",
+      "list",
+      "bye"
+    ],
+    "expected_output": "____________________________________________________________\n Welcome back, Your Highness!\n What would you like to do today?\n____________________________________________________________\n____________________________________________________________\n Consider it done, Your Highness!\n I've added: [T][ ] spaced task\n You now have 1 task in your list.\n____________________________________________________________\n____________________________________________________________\n Oh snow! Please use the format yyyy-MM-dd HHmm.\n____________________________________________________________\n____________________________________________________________\n Oh snow! A deadline can only have one /by parameter.\n____________________________________________________________\n____________________________________________________________\n Oh snow! An event can only have one /from parameter.\n____________________________________________________________\n____________________________________________________________\n Oh snow! An event's end time must be after its start time.\n____________________________________________________________\n____________________________________________________________\n Oh snow! Please place /from before /to.\n____________________________________________________________\n____________________________________________________________\n Oh snow! Task number 0 is not in your list.\n____________________________________________________________\n____________________________________________________________\n Oh snow! Task number 2 is not in your list.\n____________________________________________________________\n____________________________________________________________\n Oh snow! Task numbers must be whole numbers. Try: delete 1\n____________________________________________________________\n____________________________________________________________\n Your Highness, here are the tasks in your list:\n 1.[T][ ] spaced task\n____________________________________________________________\n____________________________________________________________\n Until next time, Your Highness!\n Stay wonderful!\n____________________________________________________________\n"
   }
 ]
 ```

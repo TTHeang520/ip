@@ -1,103 +1,132 @@
 package baby;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.List;
 
 /**
  * Handles saving tasks to the data file and loading tasks from it.
  */
 public class Storage {
     private static final String LINE = "____________________________________________________________";
-    private static final String FILE_PATH = System.getProperty("baby.filePath", "./data/baby.txt");
+    private static final String DEFAULT_FILE_PATH = "./data/baby.txt";
 
     /**
      * Saves the current tasks to the data file.
      *
      * @param tasks The tasks to save.
+     * @return True if all tasks were saved successfully.
      */
-    public static void saveTasks(ArrayList<Task> tasks) {
+    public static boolean saveTasks(ArrayList<Task> tasks) {
         try {
-            File dataFile = new File(FILE_PATH);
-            File dataFolder = dataFile.getParentFile();
+            return saveTasks(tasks, getDataPath());
+        } catch (InvalidPathException e) {
+            return false;
+        }
+    }
+
+    static boolean saveTasks(ArrayList<Task> tasks, Path dataPath) {
+        try {
+            Path dataFolder = dataPath.getParent();
             if (dataFolder != null) {
-                dataFolder.mkdirs();
+                Files.createDirectories(dataFolder);
             }
 
-            FileWriter writer = new FileWriter(dataFile);
-
-            for (Task task : tasks) {
-                writer.write(task.toFileString() + System.lineSeparator());
-            }
-
-            writer.close();
-        } catch (IOException e) {
-            printError("Sorry My Princess, I couldn't save your tasks.");
+            List<String> lines = tasks.stream().map(Task::toFileString).toList();
+            Files.write(dataPath, lines);
+            return true;
+        } catch (IOException | SecurityException e) {
+            return false;
         }
     }
 
     /**
      * Loads saved tasks from the data file.
      *
-     * @return The saved tasks, or an empty list if the data file does not exist.
+     * @return The valid saved tasks, or an empty list if the data file cannot be read.
      */
     public static ArrayList<Task> loadTasks() {
-        ArrayList<Task> tasks = new ArrayList<>();
-        File file = new File(FILE_PATH);
+        try {
+            return loadTasks(getDataPath());
+        } catch (InvalidPathException e) {
+            printError("Oh snow! The data file path is invalid, so I couldn't load your tasks.");
+            return new ArrayList<>();
+        }
+    }
 
-        if (!file.exists()) {
+    static ArrayList<Task> loadTasks(Path dataPath) {
+        ArrayList<Task> tasks = new ArrayList<>();
+        if (!Files.exists(dataPath)) {
             return tasks;
         }
 
         try {
-            Scanner fileScanner = new Scanner(file);
-
-            while (fileScanner.hasNextLine()) {
-                String line = fileScanner.nextLine();
-                String[] parts = line.split(" \\| ");
-
-                String type = parts[0];
-                boolean isDone = parts[1].equals("1");
-
-                Task task;
-
-                if (type.equals("T")) {
-                    task = new Todo(parts[2]);
-                } else if (type.equals("D")) {
-                    DateTimeFormatter formatter =
-                            DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-
-                    LocalDateTime by =
-                            LocalDateTime.parse(parts[3], formatter);
-
-                    task = new Deadline(parts[2], by);
-                } else {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-
-                    LocalDateTime from = LocalDateTime.parse(parts[3], formatter);
-
-                    LocalDateTime to =  LocalDateTime.parse(parts[4], formatter);
-
-                    task = new Event(parts[2], from, to);
+            List<String> lines = Files.readAllLines(dataPath);
+            for (int i = 0; i < lines.size(); i++) {
+                try {
+                    tasks.add(parseTask(lines.get(i)));
+                } catch (IllegalArgumentException | DateTimeParseException e) {
+                    printError("Oh snow! I skipped corrupted data on line " + (i + 1) + ".");
                 }
-
-                if (isDone) {
-                    task.markAsDone();
-                }
-
-                tasks.add(task);
             }
-
-            fileScanner.close();
-        } catch (IOException e) {
-            printError("Sorry My Princess, I couldn't load your tasks.");
+        } catch (IOException | SecurityException e) {
+            printError("Oh snow! I couldn't read the data file, so I started with an empty list.");
         }
 
         return tasks;
+    }
+
+    private static Task parseTask(String line) {
+        String[] parts = line.split(" \\| ", -1);
+        if (parts.length < 3 || parts[2].isBlank()) {
+            throw new IllegalArgumentException("Missing task fields");
+        }
+        if (!parts[1].equals("0") && !parts[1].equals("1")) {
+            throw new IllegalArgumentException("Invalid completion status");
+        }
+
+        Task task;
+        switch (parts[0]) {
+        case "T":
+            requireFieldCount(parts, 3);
+            task = new Todo(parts[2]);
+            break;
+        case "D":
+            requireFieldCount(parts, 4);
+            task = new Deadline(parts[2], Parser.parseDateTime(parts[3]));
+            break;
+        case "E":
+            requireFieldCount(parts, 5);
+            LocalDateTime from = Parser.parseDateTime(parts[3]);
+            LocalDateTime to = Parser.parseDateTime(parts[4]);
+            if (!to.isAfter(from)) {
+                throw new IllegalArgumentException("Event end time is not after start time");
+            }
+            task = new Event(parts[2], from, to);
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown task type");
+        }
+
+        if (parts[1].equals("1")) {
+            task.markAsDone();
+        }
+        return task;
+    }
+
+    private static void requireFieldCount(String[] parts, int expectedCount) {
+        if (parts.length != expectedCount) {
+            throw new IllegalArgumentException("Incorrect number of task fields");
+        }
+    }
+
+    private static Path getDataPath() {
+        return Path.of(System.getProperty("baby.filePath", DEFAULT_FILE_PATH));
     }
 
     private static void printError(String message) {
