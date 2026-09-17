@@ -95,7 +95,7 @@ public class Baby {
             ui.printError("Oh snow! Please enter a command.");
         } else {
             ui.printError("Oh snow! I don't recognise that command. Try todo, deadline, event, list, "
-                    + "mark, unmark, delete, or bye.");
+                    + "mark, unmark, delete, find, or bye.");
         }
 
         return ui.getLastResponse();

@@ -61,7 +61,7 @@ public class MainWindow {
      * @return True if the response is an error response.
      */
     private boolean isErrorResponse(String response) {
-        return response.contains("Oh snow!") || response.contains("Sorry");
+        return response.contains("Oh snow!");
     }
 
     /**

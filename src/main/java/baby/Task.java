@@ -3,7 +3,7 @@ package baby;
 /**
  * Represents a task in the task list.
  */
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
 
@@ -54,13 +54,14 @@ public class Task {
      *
      * @return The task type icon.
      */
-    public String getTypeIcon() {
-        return "";
-    }
+    public abstract String getTypeIcon();
 
-    public String toFileString() {
-        return "";
-    }
+    /**
+     * Returns the line used to save this task to the data file.
+     *
+     * @return The task in save-file format.
+     */
+    public abstract String toFileString();
 
     @Override
     public String toString() {
