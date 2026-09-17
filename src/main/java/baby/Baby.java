@@ -92,12 +92,22 @@ public class Baby {
                 || input.startsWith(Command.FIND.getCommandWord() + " ")) {
             findTasks(input, tasks, ui);
         } else if (input.isEmpty()) {
-            ui.printError("OOPS! Please enter a command.");
+            ui.printError("Oh snow! Please enter a command.");
         } else {
-            ui.printError("OOPS! I don't recognise that command. Try todo, deadline, event, list, "
+            ui.printError("Oh snow! I don't recognise that command. Try todo, deadline, event, list, "
                     + "mark, unmark, delete, or bye.");
         }
 
+        return ui.getLastResponse();
+    }
+
+    /**
+     * Returns Baby's welcome message for interfaces that do not start the console loop.
+     *
+     * @return The formatted welcome response.
+     */
+    public String getWelcomeResponse() {
+        ui.showWelcome();
         return ui.getLastResponse();
     }
 
@@ -118,7 +128,7 @@ public class Baby {
     private void addTodo(String input) {
         String description = Parser.getTodoDescription(input);
         if (description.isEmpty()) {
-            ui.printError("OOPS! A todo needs a description. Try: todo read book");
+            ui.printError("Oh snow! A todo needs a description. Try: todo read book");
             return;
         }
 
@@ -178,7 +188,7 @@ public class Baby {
         Task task = tasks.get(index);
         task.markAsDone();
         Storage.saveTasks(tasks.getTasks());
-        ui.printResponse("Nice! I've marked this task as done:", " " + task);
+        ui.printResponse("Splendid! Task " + (index + 1) + " is now marked as done:", " " + task);
     }
 
     /**
@@ -199,7 +209,9 @@ public class Baby {
         Task task = tasks.get(index);
         task.markAsNotDone();
         Storage.saveTasks(tasks.getTasks());
-        ui.printResponse("OK, I've marked this task as not done yet:", " " + task);
+        ui.printResponse(
+                "Certainly, Your Highness. Task " + (index + 1) + " is marked as not done again:",
+                " " + task);
     }
 
     /**
@@ -220,9 +232,10 @@ public class Baby {
         Task removedTask = tasks.remove(index);
         Storage.saveTasks(tasks.getTasks());
         ui.printResponse(
-                "Noted. I've removed this task:",
-                " " + removedTask,
-                "Now you have " + tasks.size() + " tasks in the list.");
+                "It's been removed, Your Highness.",
+                "Deleted: " + removedTask,
+                "You now have " + tasks.size() + " " + (tasks.size() == 1 ? "task" : "tasks")
+                        + " in your list.");
     }
 
     /**
@@ -236,7 +249,7 @@ public class Baby {
         String keyword = input.substring(Command.FIND.getCommandWord().length()).trim();
 
         if (keyword.isEmpty()) {
-            ui.printError("OOPS! Please give me a keyword to find.");
+            ui.printError("Oh snow! Please give me a keyword to find.");
             return;
         }
 

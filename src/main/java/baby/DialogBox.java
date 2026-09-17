@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Circle;
 
 /**
  * Represents one row in the chat conversation.
@@ -61,6 +62,7 @@ public class DialogBox extends HBox {
             avatarText.setText(avatarTextValue);
         } else {
             displayPicture.setImage(image);
+            displayPicture.setClip(new Circle(29.0, 29.0, 29.0));
             avatarText.setVisible(false);
             avatarText.setManaged(false);
         }

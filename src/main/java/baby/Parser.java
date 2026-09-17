@@ -35,17 +35,17 @@ public class Parser {
         }
 
         if (parts.length < 2) {
-            ui.printError("OOPS! A deadline needs a description and /by. Try: deadline return book /by Sunday");
+            ui.printError("Oh snow! A deadline needs a description and /by. Try: deadline return book /by Sunday");
             return null;
         }
 
         String description = parts[0].trim();
         String byText = parts[1].trim();
         if (description.isEmpty()) {
-            ui.printError("OOPS! A deadline needs a description before /by.");
+            ui.printError("Oh snow! A deadline needs a description before /by.");
             return null;
         } else if (byText.isEmpty()) {
-            ui.printError("OOPS! A deadline needs a date or time after /by.");
+            ui.printError("Oh snow! A deadline needs a date or time after /by.");
             return null;
         }
 
@@ -56,7 +56,7 @@ public class Parser {
             LocalDateTime by = LocalDateTime.parse(byText, formatter);
             return new Deadline(description, by);
         } catch (DateTimeParseException e) {
-            ui.printError("OOPS! Please use the format yyyy-MM-dd HHmm.");
+            ui.printError("Oh snow! Please use the format yyyy-MM-dd HHmm.");
             return null;
         }
     }
@@ -73,7 +73,7 @@ public class Parser {
         String[] descriptionAndTimes = splitEventDescriptionAndTimes(details);
 
         if (descriptionAndTimes.length < 2) {
-            ui.printError("OOPS! An event needs a description, /from, and /to. Try: "
+            ui.printError("Oh snow! An event needs a description, /from, and /to. Try: "
                     + "event meeting /from Mon 2pm /to 4pm");
             return null;
         }
@@ -83,20 +83,20 @@ public class Parser {
         String[] fromAndTo = splitEventTimes(times);
 
         if (fromAndTo.length < 2) {
-            ui.printError("OOPS! An event needs an end time after /to.");
+            ui.printError("Oh snow! An event needs an end time after /to.");
             return null;
         }
 
         String fromText = fromAndTo[0].trim();
         String toText = fromAndTo[1].trim();
         if (description.isEmpty()) {
-            ui.printError("OOPS! An event needs a description before /from.");
+            ui.printError("Oh snow! An event needs a description before /from.");
             return null;
         } else if (fromText.isEmpty()) {
-            ui.printError("OOPS! An event needs a start time after /from.");
+            ui.printError("Oh snow! An event needs a start time after /from.");
             return null;
         } else if (toText.isEmpty()) {
-            ui.printError("OOPS! An event needs an end time after /to.");
+            ui.printError("Oh snow! An event needs an end time after /to.");
             return null;
         }
 
@@ -128,7 +128,7 @@ public class Parser {
 
             return new Event(description, from, to);
         } catch (DateTimeParseException e) {
-            ui.printError("OOPS!Please use the format yyyy-MM-dd HHmm. My princess.");
+            ui.printError("Oh snow! Please use the format yyyy-MM-dd HHmm.");
             return null;
         }
     }
@@ -146,7 +146,7 @@ public class Parser {
         String taskNumberText = input.substring(command.length()).trim();
 
         if (taskNumberText.isEmpty()) {
-            ui.printError("OOPS! Please give me a task number to " + command + ". Try: " + command + " 1");
+            ui.printError("Oh snow! Please give me a task number to " + command + ". Try: " + command + " 1");
             return -1;
         }
 
@@ -154,12 +154,12 @@ public class Parser {
         try {
             taskNumber = Integer.parseInt(taskNumberText);
         } catch (NumberFormatException e) {
-            ui.printError("OOPS! Task numbers must be whole numbers. Try: " + command + " 1");
+            ui.printError("Oh snow! Task numbers must be whole numbers. Try: " + command + " 1");
             return -1;
         }
 
         if (taskNumber < 1 || taskNumber > taskCount) {
-            ui.printError("OOPS! Task number " + taskNumber + " is not in your list.");
+            ui.printError("Oh snow! Task number " + taskNumber + " is not in your list.");
             return -1;
         }
 

@@ -8,29 +8,29 @@
 
 <fx:root alignment="TOP_RIGHT"
          maxWidth="1.7976931348623157E308"
-         spacing="10.0"
+         spacing="12.0"
          stylesheets="@../css/dialog-box.css"
          type="javafx.scene.layout.HBox"
          xmlns="http://javafx.com/javafx/25"
          xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Label fx:id="dialog" maxWidth="285.0" wrapText="true">
+        <Label fx:id="dialog" maxWidth="390.0" wrapText="true">
             <padding>
-                <Insets bottom="10.0" left="13.0" right="13.0" top="10.0" />
+                <Insets bottom="11.0" left="15.0" right="15.0" top="11.0" />
             </padding>
         </Label>
 
         <StackPane fx:id="avatarFrame"
-                   maxHeight="66.0"
-                   maxWidth="66.0"
-                   minHeight="66.0"
-                   minWidth="66.0"
-                   prefHeight="66.0"
-                   prefWidth="66.0">
+                   maxHeight="64.0"
+                   maxWidth="64.0"
+                   minHeight="64.0"
+                   minWidth="64.0"
+                   prefHeight="64.0"
+                   prefWidth="64.0">
             <children>
                 <ImageView fx:id="displayPicture"
-                           fitHeight="62.0"
-                           fitWidth="62.0"
+                           fitHeight="58.0"
+                           fitWidth="58.0"
                            pickOnBounds="true"
                            preserveRatio="true"
                            smooth="true" />

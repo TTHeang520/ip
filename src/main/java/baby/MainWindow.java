@@ -33,6 +33,8 @@ public class MainWindow {
     public void initialize() {
         scrollPane.setFitToWidth(true);
         dialogContainer.heightProperty().addListener((observable) -> scrollPane.setVvalue(1.0));
+        dialogContainer.getChildren().add(
+                DialogBox.getBabyDialog(formatBabyResponse(baby.getWelcomeResponse()), false));
     }
 
     /**
@@ -46,7 +48,7 @@ public class MainWindow {
 
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input),
-                DialogBox.getBabyDialog(formatBabyResponse(response, isError), isError)
+                DialogBox.getBabyDialog(formatBabyResponse(response), isError)
         );
 
         userInput.clear();
@@ -59,23 +61,17 @@ public class MainWindow {
      * @return True if the response is an error response.
      */
     private boolean isErrorResponse(String response) {
-        return response.contains("OOPS!") || response.contains("Sorry");
+        return response.contains("Oh snow!") || response.contains("Sorry");
     }
 
     /**
      * Makes the console response text pleasant to read inside a chat bubble.
      *
      * @param response The raw response from Baby.
-     * @param isError Whether the response is an error response.
      * @return The text to display in the GUI.
      */
-    private String formatBabyResponse(String response, boolean isError) {
-        String message = stripConsoleLines(response);
-        if (isError) {
-            return "Oh snow, " + message.replace("OOPS!", "").trim();
-        }
-
-        return "Your Highness,\n" + message;
+    private String formatBabyResponse(String response) {
+        return stripConsoleLines(response);
     }
 
     /**
